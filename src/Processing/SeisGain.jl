@@ -28,13 +28,12 @@ julia> d, extent = SeisHypEvents();
 Credits: Juan I. Sabbione, Aaron Staton, Mauricio D. Sacchi, 2016
 
 """
-function SeisGain{Td<:Real,Tp<:Real
-                  }(d::Array{Td,2}; dt::Real=0.004, kind::AbstractString="time",
-                    param::Vector{Tp}=[2.0,0.0], norm::Int=0)
+function SeisGain(d::Array{Td,2}; dt::Real=0.004, kind::AbstractString="time",
+                    param::Vector{Tp}=[2.0,0.0], norm::Int=0) where {Td<:Real,Tp<:Real}
 
     nt = size(d,1)
     nx = size(d[:,:],2)
-    dout = zeros(d)
+    dout = zero(d)
 
     if kind == "time"   # Geometrical spreading-like gain
 

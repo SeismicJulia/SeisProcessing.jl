@@ -14,18 +14,17 @@ amplitude, or `db=true` if the signal-to-noise ratio is measure in dB.
 
 # Example
 ```julia
-julia> d, extent = SeisHypEvents(); dnoisy = SeisAddNoise(d, 2); 
+julia> d, extent = SeisHypEvents(); dnoisy = SeisAddNoise(d, 2);
 MeasureSNR(d, dnoisy)
 ```
 """
-
-function MeasureSNR{Ts<:Real, Tn<:Real, N}(signal::Array{Ts, N},
-                                           noisy::Array{Tn, N}; db::Bool=false)
+function MeasureSNR(signal::Array{Ts, N},
+            noisy::Array{Tn, N}; db::Bool=false) where {Ts <: Real, Tn <: Real, N}
 
     if db==false
-        snr = vecnorm(signal)/vecnorm(signal-noisy)
+        snr = norm(signal)/norm(signal-noisy)
     elseif db==true
-        snr = 20*log10(vecnorm(signal)/vecnorm(signal-noisy))
+        snr = 20*log10(norm(signal)/norm(signal-noisy))
     end
     return snr
 

@@ -1,11 +1,9 @@
 function SeisPWD(in;w1=10,w2=10,dz_in=1,dx_in=1,format="angle")
 	# dip estimation by Plane Wave Destruction
 	# see http://sepwww.stanford.edu/data/media/public/sep//prof/pvi.pdf Chapter 4.
-
-	d=0
 	d = copy(in)
 	n1,n2 = size(in)
-	#format = get(param,"format","angle") # output format: "angle" (in degrees wrt vertical) or "dip" (in y samples over x samples)
+#	format = get(param,"format","angle") # output format: "angle" (in degrees wrt vertical) or "dip" (in y samples over x samples)
 	pp = zeros(n1,n2); dx = wavekill(1.,pp,n1,n2,d)
 	pp =  ones(n1,n2); dt = wavekill(0.,pp,n1,n2,d)
 	dtdx = dt.*dx
@@ -25,7 +23,7 @@ function SeisPWD(in;w1=10,w2=10,dz_in=1,dx_in=1,format="angle")
 	coh = sqrt.((dtdx.*dtdx)./(dtdt.*dxdx))
 	pp = -dtdx./dtdt
 
-	coh = zeros(n1,n2); 
+	coh = zeros(n1,n2);
 	for i1 = 1 : n1
 		for i2 = 1 : n2
 			if (abs(dtdt[i1,i2]) > 1e-6)
@@ -33,7 +31,7 @@ function SeisPWD(in;w1=10,w2=10,dz_in=1,dx_in=1,format="angle")
 				pp[i1,i2] = -dtdx[i1,i2]./dtdt[i1,i2]
 			else
 				coh[i1,i2] = 0.
-				pp[i1,i2]  = 0.			
+				pp[i1,i2]  = 0.
 			end
 		end
 	end
@@ -47,7 +45,7 @@ function SeisPWD(in;w1=10,w2=10,dz_in=1,dx_in=1,format="angle")
 	res = wavekill(1.,pp,n1,n2,d)
 
 	if (format == "angle")
-		pp = atan.(pp*dzin/dxin)*180/pi;
+		pp = atan.(pp*dz_in/dx_in)*180/pi;
 	end
 
 
@@ -56,15 +54,15 @@ end
 
 function wavekill(aa,bb,n1,n2,uu)
 	vv = zeros(n1,n2)
-	s11 = -aa-bb; s12 = aa-bb; 
-	s21 = -aa+bb; s22 = aa+bb;
+	s11 = -aa .- bb; s12 = aa .- bb;
+	s21 = -aa .+ bb; s22 = aa .+ bb;
 	for i2 = 1 : n2-1
 		for i1 = 1 : n1-1
 			vv[i1,i2] = uu[i1  ,i2  ]*s11[i1,i2] + uu[i1  ,i2+1]*s12[i1,i2] + uu[i1+1,i2  ]*s21[i1,i2] + uu[i1+1,i2+1]*s22[i1,i2];
 		end
 	end
 	vv[n1,:] = vv[n1-1,:]
-	vv[:,n2] = vv[:,n2-1]	
+	vv[:,n2] = vv[:,n2-1]
 	return vv
 end
 

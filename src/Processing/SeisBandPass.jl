@@ -1,7 +1,9 @@
 function SeisBandPass(d;dt=0.001,fa=0,fb=0,fc=60,fd=80)
 
+
 	nt = size(d,1)
-	nx = size(d[:,:],2)
+	dn = reshape(d,nt,:)
+	nx = size(dn,2)
 	nf = iseven(nt) ? nt : nt + 1
 	df = 1/nf/dt
 	nw = round(Int,nf/2) + 1
@@ -12,7 +14,7 @@ function SeisBandPass(d;dt=0.001,fa=0,fb=0,fc=60,fd=80)
 		iw_max = round(Int,floor(0.5/dt))
 	end
 
-	d = pad_first_axis(d,nf)
+	d = pad_first_axis(dn,nf)
 	m = fft(d,1)/sqrt(size(d,1))
 	if fa > 0.
 		m[1,:] *= 0.
@@ -31,15 +33,15 @@ function SeisBandPass(d;dt=0.001,fa=0,fb=0,fc=60,fd=80)
 			m[iw,:] *= 0.
 		end
 	end
-	m[iw_max:end,:] = 0.
+	m[iw_max:end,:] .= 0.
 
 	# symmetries
 	for iw=nw+1:nf
 		m[iw,:] = conj(m[nf-iw+2,:])
 	end
-	d = real(bfft(m,1)/sqrt(size(m,1)))
-
-	return d[1:nt,1:nx];
+	dn = real(bfft(m,1)/sqrt(size(m,1)))
+	dout = dn[1:nt,1:nx];
+	return reshape(dout,size(d));
 end
 
 function pad_first_axis(a,N1)
@@ -51,8 +53,3 @@ function pad_first_axis(a,N1)
 	end
 	return b
 end
-
-
-
-
-
