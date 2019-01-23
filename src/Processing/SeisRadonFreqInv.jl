@@ -31,18 +31,16 @@ Canadian Journal of Exploration Geophysics, 22, 44-55.
 *  Sacchi, M.D. and Ulrych, T.J., 1995, High-resolution velocity gathers and
 offset space reconstruction: Geophysics, 60, 1169-1177.
 """
-
-function SeisRadonFreqInv{Td<:Real, Th<:Real, Tp<:Real
-                          }(d::Array{Td,2}; order::AbstractString="parab",
+function SeisRadonFreqInv(d::Array{Td,2}; order::AbstractString="parab",
                             dt::Real=0.004, href::Real=0.0,
                             h::Vector{Th}=collect(0.0:20.0:1000.0),
                             p::Vector{Tp}=collect(-0.05:0.01:2.2),
-                            flow::Real=0.0, fhigh::Real=125.0, mu::Real=0.001)
+                            flow::Real=0.0, fhigh::Real=125.0, mu::Real=0.001) where {Td<:Real, Th<:Real, Tp<:Real}
     if order=="parab"
-        I = 2
+        ind = 2
         href == 0 && (href = maximum(abs.(h)))
     elseif order=="linear"
-        I = 1
+        ind = 1
         href = 1.0
     else
         error("Order should be equal to \"parab\" or \"linear\"")
@@ -51,8 +49,8 @@ function SeisRadonFreqInv{Td<:Real, Th<:Real, Tp<:Real
     nh = length(h)
     nh == size(d, 2) || error("lenght(h) must be equal to size(d, 2)")
     np = length(p)
-    nw = 2*nextpow2(nt)
-    d = cat(1, d, zeros(Td, nw-nt, nh))
+    nw = 2*nextpow(2,nt)
+    d = cat(d, zeros(Td, nw-nt, nh),dims=1)
     D = fft(d, 1)
     iw_low = round(Int, flow*dt*nw+1)
     iw_high = round(Int, fhigh*dt*nw+1)
@@ -62,16 +60,16 @@ function SeisRadonFreqInv{Td<:Real, Th<:Real, Tp<:Real
         L = zeros(Complex{Td}, nh, np)
         for ip = 1:np
             for ih = 1:nh
-                phi = w*p[ip]*(h[ih]/href)^I
+                phi = w*p[ip]*(h[ih]/href)^ind
       	        L[ih, ip] = exp(-im*phi)
             end
         end
         R = L'*L
-        r0 = trace(R)/np
+        r0 = tr(R)/np
         xa = L'*D[iw, :]
-        Q = mu*r0*eye(np)
+        Q = mu*r0*Matrix(I,np,np)
         x  = (R + Q)\xa
-        M[iw, :] = x.'
+        M[iw, :] = copy(transpose(x))
     end
     for iw = round(Int, nw/2)+2:nw
         M[iw, :] = conj(M[nw-iw+2, :])

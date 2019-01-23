@@ -31,18 +31,16 @@ Canadian Journal of Exploration Geophysics, 22, 44-55.
 *  Sacchi, M.D. and Ulrych, T.J., 1995, High-resolution velocity gathers and
 offset space reconstruction: Geophysics, 60, 1169-1177.
 """
-
-function SeisRadonFreqFor{Tm<:Real, Th<:Real, Tp<:Real
-                          }(m::Array{Tm,2}, nt::Int; order::AbstractString="parab",
+function SeisRadonFreqFor(m::Array{Tm,2}, nt::Int; order::AbstractString="parab",
                             dt::Real=0.004, href::Real=0.0,
                             h::Vector{Th}=collect(0.0:20.0:1000.0),
                             p::Vector{Tp}=collect(-0.05:0.01:2.2),
-                            flow::Real=0.0, fhigh::Real=125.0)
+                            flow::Real=0.0, fhigh::Real=125.0) where {Tm<:Real, Th<:Real, Tp<:Real}
     if order=="parab"
-        I = 2
+        ind = 2
         href == 0 && (href = maximum(abs.(h)))
     elseif order=="linear"
-        I = 1
+        ind = 1
         href = 1.0
     else
         error("Order should be equal to \"parab\" or \"linear\"")
@@ -51,8 +49,8 @@ function SeisRadonFreqFor{Tm<:Real, Th<:Real, Tp<:Real
     np = length(p)
     np == size(m, 2) || error("lenght(p) must be equal to size(m, 2)")
     nh = length(h)
-    nw = nextpow2(ntau)
-    m = cat(1, m, zeros(Tm, nw-ntau, np))
+    nw = nextpow(2,ntau)
+    m = cat( m, zeros(Tm, nw-ntau, np),dims=1)
     M = fft(m, 1)
     iw_low = round(Int, flow*dt*nw+1)
     iw_high = round(Int, fhigh*dt*nw+1)
@@ -62,7 +60,7 @@ function SeisRadonFreqFor{Tm<:Real, Th<:Real, Tp<:Real
         L = zeros(Complex{Tm}, nh, np)
         for ip = 1:np
             for ih = 1:nh
-                phi = w*p[ip]*(h[ih]/href)^I
+                phi = w*p[ip]*(h[ih]/href)^ind
       	        L[ih, ip] = exp(-im*phi)
             end
         end

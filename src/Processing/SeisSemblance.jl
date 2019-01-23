@@ -7,7 +7,7 @@ function SeisSemblance(in,param=Dict())
 	vmin = get(param,"vmin",1500)
 	vmax = get(param,"vmax",3500)
 	nv = get(param,"nv",nx)
-	v = linspace(vmin,vmax,nv)
+	v = range(vmin,stop=vmax,length=nv)
 	tau = collect(0:4:nt-1)*dt
 	ntau = length(tau)
 	L = get(param,"L",5)
@@ -25,12 +25,12 @@ function SeisSemblance(in,param=Dict())
 					i2 = i1 + 1
 					if (i1>=1 && i2<=nt)
 						a = is-i1
-						s[ig+L+1,ix] = (1.-a)*in[i1,ix] + a*in[i2,ix]   #Grab sample with Linear interpolation
+						s[ig+L+1,ix] = (1 .-a)*in[i1,ix] + a*in[i2,ix]   #Grab sample with Linear interpolation
 					end
 				end
 			end
 			#s = s.*H
-			s1  = sum( (sum(s,2)).^2)
+			s1  = sum( (sum(s,dims=2)).^2)
 			s2  = sum( sum(s.^2))
 			S[it,iv] = abs(s1-s2)
 		end

@@ -1,6 +1,10 @@
 module SeisProcessing
-    using Interpolations,Requires,Compat
+    using Interpolations
+    using Requires,
+    FFTW,
+    LinearAlgebra,
+    DSP
     include("Processing/Processing.jl")
+    include("Modelling/Modelling.jl")
     include("Tools/Tools.jl")
-    include("Windows/Windows.jl")
 end
