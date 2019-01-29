@@ -24,7 +24,7 @@ Then, run the Julia application and type, at the prompt
 ```using SeisProcessing```
 
 If you use the SeismicJulia project, please cite the following paper
-
+```
 @article{stanton2016efficient,
   title={Efficient geophysical research in Julia},
   author={Stanton, Aaron and Sacchi, Mauricio D},
@@ -32,7 +32,7 @@ If you use the SeismicJulia project, please cite the following paper
   pages={1--3},
   year={2016}
 }
-
+```
 
 ## Basic usage
 
