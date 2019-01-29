@@ -18,7 +18,9 @@ To use this package you must first install the [Julia](http://julialang.org/down
 Then, run the Julia application and type, at the prompt
 
 ```using Pkg```
+
 ```Pkg.add("https://github.com/SeismicJulia/SeisProcessing.jl.git")```
+
 ```using SeisProcessing```
 
 If you use the SeismicJulia project, please cite the following paper
