@@ -5,22 +5,22 @@ Transform a CMP Gather time-offset gather to tau-p gather using a frequency
 domain inverse parabolic or linear Radon operator via least-squares inversion.
 
 # Arguments
-* `d::Array{T<:Real,2}`: 2D data, `d[1:nt,1:nh]`, where `nt` is number of
+* `d::Array{Float64,2}`: 2D data, `d[1:nt,1:nh]`, where `nt` is number of
 time samples and `nh` the number of receivers.
 
 # Keyword arguments
-* `order::AbstractString="parab"`: `"parab"` for parabolic transform, `"linear"`
+* `order::"parab"`: `"parab"` for parabolic transform, `"linear"`
 for linear transform.
-* `dt::Real=0.004`: sampling interval in seconds.
-* `h::Vector{Real}=collect(0.0:20.0:1000.0)`: offset vector `h[1:nh]`.
-* `href::Real=0.0`: reference offset for parabolic Radon Transform. If the
+* `dt=0.004`: sampling interval in seconds.
+* `h=collect(0.0:20.0:1000.0)`: offset vector `h[1:nh]`.
+* `href=0.0`: reference offset for parabolic Radon Transform. If the
 defautl value `href=0.0` is given, `href` is set to `max(abs(h))`.
-* `p::Vector{Real}=collect(-0.05:0.01:2.2)`: `p[1:np]`. If `order="parab"`, `p`
+* `p=collect(-0.05:0.01:2.2)`: `p[1:np]`. If `order="parab"`, `p`
 is a vector of residual moveout ("curvatures") at reference offset `href` in
 seconds; if `order=linear`, `p` is a vector of ray parameters in s/m.
-* `flow::Real=0.0`: minimum frequency in the data in Hz.
-* `fhigh::Real=125.0`: maximum frequency in the data in Hz.
-* `mu::Real=0.001`: trade off parameter or damping for the L.S. inversion.
+* `flow=0.0`: minimum frequency in the data in Hz.
+* `fhigh=125.0`: maximum frequency in the data in Hz.
+* `mu=0.001`: trade off parameter or damping for the L.S. inversion.
 
 # Output
 * `m`: inverted Radon panel `m[1:ntau, 1:np]`.
@@ -31,11 +31,11 @@ Canadian Journal of Exploration Geophysics, 22, 44-55.
 *  Sacchi, M.D. and Ulrych, T.J., 1995, High-resolution velocity gathers and
 offset space reconstruction: Geophysics, 60, 1169-1177.
 """
-function SeisRadonFreqInv(d::Array{Td,2}; order::AbstractString="parab",
-                            dt::Real=0.004, href::Real=0.0,
-                            h::Vector{Th}=collect(0.0:20.0:1000.0),
-                            p::Vector{Tp}=collect(-0.05:0.01:2.2),
-                            flow::Real=0.0, fhigh::Real=125.0, mu::Real=0.001) where {Td<:Real, Th<:Real, Tp<:Real}
+function SeisRadonFreqInv(d::Array{Float64,2}; order::="parab",
+                            dt::=0.004, href::=0.0,
+                            h=collect(0.0:20.0:1000.0),
+                            p=collect(-0.05:0.01:2.2),
+                            flow=0.0, fhigh=125.0, mu=0.001)
     if order=="parab"
         ind = 2
         href == 0 && (href = maximum(abs.(h)))

@@ -7,10 +7,11 @@
 
 # SeisProcessing.jl
 
-[![Build Status](https://travis-ci.org/SeismicJulia/Seismic.jl.svg?branch=master)](https://travis-ci.org/SeismicJulia/Seismic.jl)
+[![Build Status](https://travis-ci.org/SeismicJulia/SeisProcessing.jl.svg?branch=master)](https://travis-ci.org/SeismicJulia/SeisProcessing.jl)
 
-This package contains Processing tools for SeismicJulia project
-At the moment, it is updated and tested against Julia v1
+This package contains Processing tools for SeismicJulia project.
+
+At the moment, it is updated and tested against Julia v1.
 
 ## Installation
 
@@ -35,6 +36,7 @@ If you use the SeismicJulia project, please cite the following paper
 ```
 
 ## Basic usage
+The following example produces the figure below.
 
 ```Julia
 using SeisProcessing
@@ -73,12 +75,9 @@ title("Berlage wavelet")
 tight_layout()
 
 ```
-will produce this figure:
 
-![plot1](http://seismic.physics.ualberta.ca/figures/616_79_PR2.png)
+## For developers: contributing to the project
 
-## For developers: contributing to the package
-If you want to fork the repository and contribute to Seismic.jl:
 * New at GitHub? These [basic commands](http://seismic.physics.ualberta.ca/docs/git_basic_commands.pdf)
 and this [dictionary](http://seismic.physics.ualberta.ca/docs/git_dictionary.pdf) might help.
 * This [tutorial](http://seismic.physics.ualberta.ca/docs/develop_SeismicJulia.pdf) provides the basics

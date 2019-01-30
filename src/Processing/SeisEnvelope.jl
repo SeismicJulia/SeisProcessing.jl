@@ -1,3 +1,22 @@
+"""
+    SeisEnvelope(in; <keyword arguments>)
+
+Calculate the envelope of input seismic array.
+
+# Arguments
+* `in`: input seismic traces
+
+# Output
+Array of envelopes
+
+# Example
+```julia
+julia> using SeisPlot
+julia> d = SeisLinearEvents(); SeisPlotTX(SeisEnvelope(d));
+```
+*Credits: Aaron Stanton,2017*
+
+"""
 function SeisEnvelope(d)
 
 	D = fft(d,1)

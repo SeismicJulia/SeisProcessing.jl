@@ -1,4 +1,30 @@
-function SeisFKFilter(d;dt=0.002,dx=10,va=-2000,vb=-3000,vc=3000,vd=2000)
+"""
+    SeisFKFilter(in; <keyword arguments>)
+
+Removes energy from seismic data by applying filters in the frequency-wavenumber domain
+
+
+# Arguments
+* `in`: input seismic array in TX domain
+
+# Keyword arguments
+* `dt=0.004`: time sampling interval in secs.
+* `dx=10`: space sampling interval in meters.
+* `va=-2000,vb=-3000,vc=3000,vd=2000`: apparent velocity range to filter
+
+# Output
+Filtered data in TX domain
+
+# Example
+```julia
+julia> d = SeisLinearEvents(); df = SeisFKFilter(d,va=-4000,vb=-6000,vc=6000,vd=4000);
+```
+*Credits: Aaron Stanton,2017*
+
+"""
+
+
+function SeisFKFilter(d;dt=0.004,dx=10,va=-2000,vb=-3000,vc=3000,vd=2000)
 
     nt = size(d,1)
     nx = size(d,2)
