@@ -7,7 +7,7 @@
 
 # SeisProcessing.jl
 
-[![Build Status](https://travis-ci.org/SeismicJulia/SeisProcessing.jl.svg?branch=master)](https://travis-ci.org/SeismicJulia/SeisProcessing.jl)
+[![Build Status](https://travis-ci.com/fercarozzi/SeisProcessing.jl.svg?branch=master)](https://travis-ci.com/fercarozzi/SeisProcessing.jl)
 
 This package contains Processing tools for SeismicJulia project.
 
