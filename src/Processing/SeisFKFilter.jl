@@ -22,8 +22,6 @@ julia> d = SeisLinearEvents(); df = SeisFKFilter(d,va=-4000,vb=-6000,vc=6000,vd=
 *Credits: Aaron Stanton,2017*
 
 """
-
-
 function SeisFKFilter(d;dt=0.004,dx=10,va=-2000,vb=-3000,vc=3000,vd=2000)
 
     nt = size(d,1)

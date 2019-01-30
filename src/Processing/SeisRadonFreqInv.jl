@@ -31,8 +31,8 @@ Canadian Journal of Exploration Geophysics, 22, 44-55.
 *  Sacchi, M.D. and Ulrych, T.J., 1995, High-resolution velocity gathers and
 offset space reconstruction: Geophysics, 60, 1169-1177.
 """
-function SeisRadonFreqInv(d::Array{Float64,2}; order::="parab",
-                            dt::=0.004, href::=0.0,
+function SeisRadonFreqInv(d::Array{Float64,2}; order="parab",
+                            dt=0.004, href=0.0,
                             h=collect(0.0:20.0:1000.0),
                             p=collect(-0.05:0.01:2.2),
                             flow=0.0, fhigh=125.0, mu=0.001)
