@@ -21,13 +21,11 @@ julia> figure(2); clf(); SeisPlot(di,style="wiggles")
 ```
 MAY 2018, MDS
 """
-
-
- function SeisSincInterp1D(d::Array{Tv},order::Ti) where {Tv<:Number, Ti<:Int64} 
+function SeisSincInterp1D(d::Array{Tv},order::Ti) where {Tv<:Number, Ti<:Int64} 
 
 
         Ndims = ndims(d)
-        Ndims == 1? nx = 1 :  nx = prod(size(d)[2:Ndims])
+        Ndims == 1 ? nx = 1 :  nx = prod(size(d)[2:Ndims])
         dims = size(d) 
         N = dims[1]
         Npad = order*N 
