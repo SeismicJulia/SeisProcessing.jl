@@ -1,4 +1,32 @@
-function SeisBandPass(d;dt=0.001,fa=0,fb=0,fc=60,fd=80)
+"""
+    SeisBandPass(in; <keyword arguments>)
+
+Apply a BandPass filter to an input seismic array,
+Bandpass filter: flat passband without gain or attenuation, and attenuate all frequencies outside.
+
+# Arguments
+* `in`: input seismic array
+
+# Keyword arguments
+* `dt=0.004`: time sampling interval in secs.
+* `fa=0`: lower frequency cut [Hz]
+* `fb=0`: lower frequency banpass [Hz]
+* `fc=60`: upper frequency bandpass [Hz]
+* `fd=80`: upper frequency cut [Hz]
+
+# Output
+Bandpassed seismic data
+# Example
+```julia
+julia> using SeisPlot
+julia> d = SeisLinearEvents(dy=0.004); db = SeisBandPass(d,dy=0.004,fc=30,fd=45);
+julia> SeisPlotFK(d,dy=0.004)
+julia> SeisPlotFK(db,dy=0.004)
+```
+*Credits: Aaron Stanton,2017*
+
+"""
+function SeisBandPass(d;dt=0.004,fa=0,fb=0,fc=60,fd=80)
 
 
 	nt = size(d,1)

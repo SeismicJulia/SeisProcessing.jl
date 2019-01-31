@@ -4,7 +4,7 @@ Generate five dimensional data `d` consisting of linear events.
 # Arguments
 **Keyword arguments**
 * `ot=0.0`: first sample for the time axis in secs.
-* `dt=0.004`: sampling interval in secs.
+* `dt=0.004`: time sampling interval in secs.
 * `nt=500`: number of time samples.
 * `ox1=0.0`: first sample for the first spatial dimension in meters.
 * `dx1=10.0`: sample interval for the first spatial dimension in meters.
@@ -25,7 +25,8 @@ Generate five dimensional data `d` consisting of linear events.
 * `f0=20.0`: central frequency of wavelet for each linear event.
 # Example
 ```julia
-julia> d = SeisLinearEvents(); SeisPlot(d);
+julia> using SeisPlot
+julia> d = SeisLinearEvents(); SeisPlotTX(d);
 ```
 Credits: Aaron Stanton, 2015
 """

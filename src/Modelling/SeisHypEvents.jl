@@ -3,7 +3,7 @@
 Generate two dimensional data `d` consisting of hyperbolic events.
 # Keyword arguments
 * `ot::Real=0.0`: first sample for the time axis in secs.
-* `dt::Real=0.004`: sampling interval in secs.
+* `dt::Real=0.004`: time sampling interval in secs.
 * `nt::Int=301`: number of time samples.
 * `ox::Real=-1000.0`: first sample for spatial dimension in meters.
 * `dx::Real=20.0`: sample interval for the spatial dimension in meters.
@@ -18,9 +18,10 @@ Generate two dimensional data `d` consisting of hyperbolic events.
 * `d::Array{Real, 2}`: two dimensional data consisting of hyperbolic events.
 # Examples
 ```julia
-julia> d = SeisHypEvents(); SeisPlot(d, extent);
+julia> using SeisPlot
+julia> d = SeisHypEvents(); SeisPlotTX(d);
 julia> d = SeisHypEvents(apex=[100, 200, -300], f0=[30, 20, 15]);
-SeisPlot(d);
+SeisPlotTX(d);
 ```
 """
 function SeisHypEvents(; ot::Real=0.0, dt::Real=0.004, nt::Int=301,

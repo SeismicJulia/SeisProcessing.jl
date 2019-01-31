@@ -20,9 +20,10 @@ Gain a group of traces.
 
 # Example
 ```julia
-julia> d, extent = SeisHypEvents();
+julia> using PyPlot
+julia> d = SeisHypEvents();
        dout = SeisGain(d, kind="agc", param=[0.05]);
-       SeisPlot([d dout], extent);
+       SeisPlotTX([d dout]);
 ```
 
 Credits: Juan I. Sabbione, Aaron Staton, Mauricio D. Sacchi, 2016

@@ -1,15 +1,16 @@
 """
-    SeisKolmogoroff(w)
+    SeisKolmogoroff(in)
 
 Kolmogoroff factorization. Transform a wavelet into its minimum phase
 equivalent.
 
 # Arguments
 
-* `w::Real`: input wavelet.
+* `in::Real`: input wavelet.
 
 # Example
 ```julia
+julia> using PyPlot
 julia> w = Ricker()
 julia> wmin = SeisKolmogoroff(w)
 julia> plot(w); plot(wmin)

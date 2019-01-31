@@ -12,11 +12,12 @@ snr is given in dB.
 `"gaussian"` or `"uniform"`.
 * `L::Int=1`: averaging operator length to band-limit the random noise.
 # Examples
-```
+```julia
+julia> using PyPlot
 julia> w = Ricker(); wn = SeisAddNoise(w, 2); plot(w); plot(wn);
 MeasureSNR(w, wn)
-julia> d, extent = SeisHypEvents(); dn = SeisAddNoise(d, 1.0, db=true, L=9);
-SeisPlot([d dn], extent); MeasureSNR(d, dn, db=true)
+julia> d = SeisHypEvents(); dn = SeisAddNoise(d, 1.0, db=true, L=9);
+SeisPlotTX([d dn]); MeasureSNR(d, dn, db=true)
 ```
 Credits: Juan I. Sabbione, 2016
 """
