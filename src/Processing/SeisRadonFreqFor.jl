@@ -51,14 +51,14 @@ function SeisRadonFreqFor(m::Array{Float64,2}, nt::Int; order="parab",
     np == size(m, 2) || error("lenght(p) must be equal to size(m, 2)")
     nh = length(h)
     nw = nextpow(2,ntau)
-    m = cat( m, zeros(Tm, nw-ntau, np),dims=1)
+    m = cat( m, zeros(nw-ntau, np),dims=1)
     M = fft(m, 1)
     iw_low = round(Int, flow*dt*nw+1)
     iw_high = round(Int, fhigh*dt*nw+1)
-    D = zeros(Complex{Tm}, nw, nh)
+    D = zeros(ComplexF64, nw, nh)
     for iw = iw_low:iw_high
         w  = 2.0*pi*(iw-1)/(nw*dt)
-        L = zeros(Complex{Tm}, nh, np)
+        L = zeros(ComplexF64, nh, np)
         for ip = 1:np
             for ih = 1:nh
                 phi = w*p[ip]*(h[ih]/href)^ind

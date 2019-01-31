@@ -50,14 +50,14 @@ function SeisRadonFreqInv(d::Array{Float64,2}; order="parab",
     nh == size(d, 2) || error("lenght(h) must be equal to size(d, 2)")
     np = length(p)
     nw = 2*nextpow(2,nt)
-    d = cat(d, zeros(Td, nw-nt, nh),dims=1)
+    d = cat(d, zeros( nw-nt, nh),dims=1)
     D = fft(d, 1)
     iw_low = round(Int, flow*dt*nw+1)
     iw_high = round(Int, fhigh*dt*nw+1)
-    M = zeros(Complex{Td}, nw, np)
+    M = zeros(ComplexF64, nw, np)
     for iw = iw_low:iw_high
         w  = 2.0*pi*(iw-1)/(nw*dt)
-        L = zeros(Complex{Td}, nh, np)
+        L = zeros(ComplexF64, nh, np)
         for ip = 1:np
             for ih = 1:nh
                 phi = w*p[ip]*(h[ih]/href)^ind
