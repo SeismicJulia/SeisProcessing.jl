@@ -6,8 +6,8 @@ dt=0.004;
 nx=30;
 dx=5;
 
-param = Dict(:nt=>nt, :dt=>dt,:nx1=>nx,:dx1=>dx, 
-              :p1=>[0.0003, -0.0005, 0.000], :p2=>[0,0,0],:p3=>[0,0,0],:p4=>[0,0,0], 
+param = Dict(:nt=>nt, :dt=>dt,:nx1=>nx,:dx1=>dx,
+              :p1=>[0.0003, -0.0005, 0.000], :p2=>[0,0,0],:p3=>[0,0,0],:p4=>[0,0,0],
               :tau=>[0.3, 0.4,0.5], :amp=>[ -1.0, 0.7,1],:f0=>20);
 
 
@@ -34,4 +34,4 @@ d2 = SeisRadonFreqFor(m, nt, order="linear", dt=dt, h=h, p=p, flow=2, fhigh=80)
 # 5- Calculate and print modeling error (%)
 e2 = 100*(sum((d-d2).^2))/sum(d.^2);
 println("Relative error = ", e2, " %")
-@test quality_factor > 0.1
+@test e2 > 0.1
