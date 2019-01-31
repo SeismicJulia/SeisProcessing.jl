@@ -16,7 +16,8 @@ SeisSemblance,
 SeisSmooth1,
 SeisSmooth2,
 SeisSmoothGathers,
-stacktraces
+stacktraces,
+SeisSincInterp1D
 include("SeisBandPass.jl")
 include("SeisDecimate.jl")
 include("SeisDelay.jl")
@@ -36,3 +37,4 @@ include("SeisSmooth1.jl")
 include("SeisSmooth2.jl")
 include("SeisSmoothGathers.jl")
 include("SeisStack.jl")
+include("SeisSincInterp1D.jl")

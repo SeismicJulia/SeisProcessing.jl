@@ -1,10 +1,10 @@
 """
     SeisDecimate(in; <keyword arguments>)
 
-Apply random or regular decimation to seismic data.
+Apply random or regular decimation to a multidimensional array of data. Input and output have the same dimensions. 
 
 # Arguments
-* `in`: input seismic array
+* `in`: input data as 2D, or 3D,4D,5D tensors. The first dimension is time. 
 
 # Keyword arguments
 * `mode="random"`: decimation mode. Random is default, else decimates uniformly.
