@@ -34,4 +34,4 @@ d2 = SeisRadonFreqFor(m, nt, order="linear", dt=dt, h=h, p=p, flow=2, fhigh=80)
 # 5- Calculate and print modeling error (%)
 e2 = 100*(sum((d-d2).^2))/sum(d.^2);
 println("Relative error = ", e2, " %")
-@test e2 > 0.1
+@test e2 < 0.1
