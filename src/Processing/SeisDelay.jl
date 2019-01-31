@@ -1,17 +1,17 @@
 """
     SeisDelay(in; <keyword arguments>)
 
-Apply a time delay to a seismic array
+Apply a time delay to 2D data
 
 # Arguments
-* `in`: input seismic array
+* `in`: input 2D data array in tx domain. First dimension is time. 
 
 # Keyword arguments
-* `delay=0.1`: time delay in secs.
+* `delay=0.1`: desired time delay in secs.
 * `dt=0.004`: time sampling interval in secs.
 
 # Output
-Delayed seismic data
+* `d2`: Delayed data in time domain
 # Example
 ```julia
 julia> d = SeisLinearEvents(); deli = SeisDelay(d);
@@ -30,7 +30,7 @@ function SeisDelay(d; delay=0.1, dt=0.004)
 	w = (iw-1)*dw
 	D[iw,:] = D[iw,:]*exp(-1im*w*delay)
     end
-    # symmetries
+    # honor symmetries
     for iw=nw+1:nf
 	D[iw,:] = conj(D[nf-iw+2,:])
     end

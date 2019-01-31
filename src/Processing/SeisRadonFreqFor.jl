@@ -50,7 +50,7 @@ function SeisRadonFreqFor(m::Array{Float64,2}, nt::Int; order="parab",
     np = length(p)
     np == size(m, 2) || error("lenght(p) must be equal to size(m, 2)")
     nh = length(h)
-    nw = nextpow(2,ntau)
+    nw = 2*nextpow(2,ntau)
     m = cat( m, zeros(nw-ntau, np),dims=1)
     M = fft(m, 1)
     iw_low = round(Int, flow*dt*nw+1)

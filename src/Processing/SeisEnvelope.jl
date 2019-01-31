@@ -1,18 +1,19 @@
 """
     SeisEnvelope(in; <keyword arguments>)
 
-Calculate the envelope of input seismic array.
+Calculate the envelope attribute of a group of input traces.
 
 # Arguments
-* `in`: input seismic traces
+* `in`: input data. A 2D Array where the first dimension is time.
 
 # Output
-Array of envelopes
+* `d`: Envelope of input data
 
 # Example
 ```julia
-julia> using SeisPlot
-julia> d = SeisLinearEvents(); SeisPlotTX(SeisEnvelope(d));
+julia> using PyPlot
+julia> dtsec = 0.002; w = Ricker(dt=dtsec);
+julia> e = SeisEnvelope(w); t=dtsec*collect(0:1:length(w)-1);plot(t,w,t,e,"-r");xlabel("Time [s]")
 ```
 *Credits: Aaron Stanton,2017*
 
