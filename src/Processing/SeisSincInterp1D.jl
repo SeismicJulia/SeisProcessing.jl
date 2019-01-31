@@ -15,9 +15,9 @@ julia> order = 2; dt=0.004; w = Ricker(dt=dt, f0=20); t = collect(0:1:length(w)-
 julia> wout = SeisSincInterp1D(w,order); tout = collect(0:1:length(wout)-1)*dt/order;
 julia> plot(t,w); plot(tout,wout,"*")  
 # 4-time upsampling of a gather 
-julia> d,e = SeisLinearEvents(); di = SeisSincInterp1D(d,4);
-julia> figure(1); clf(); SeisPlot(d,style="wiggles")
-julia> figure(2); clf(); SeisPlot(di,style="wiggles")  
+julia> d = SeisLinearEvents(); di = SeisSincInterp1D(d,4);
+julia>  SeisPlotTX(d,style="wiggles")
+julia>  SeisPlotTX(di,style="wiggles")  
 ```
 MAY 2018, MDS
 """
