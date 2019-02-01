@@ -18,11 +18,11 @@ At the moment, it is updated and tested against Julia v1.
 To use this package you must first install the [Julia](http://julialang.org/downloads/) programming language.
 Then, run the Julia application and type, at the prompt
 
-```using Pkg```
-
-```Pkg.add("https://github.com/SeismicJulia/SeisProcessing.jl.git")```
-
-```using SeisProcessing```
+```
+julia>using Pkg
+julia>Pkg.add("https://github.com/SeismicJulia/SeisProcessing.jl.git")
+julia>using SeisProcessing
+```
 
 If you use the SeismicJulia project, please cite the following paper
 ```
