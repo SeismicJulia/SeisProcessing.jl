@@ -1,12 +1,10 @@
 """
     SeisKolmogoroff(in)
 
-Kolmogoroff factorization. Transform a wavelet into its minimum phase
-equivalent.
+Transform a wavelet into its minimum phase equivalent.
 
 # Arguments
-
-* `in::Real`: input wavelet.
+- `in::Array{Real,1}`: input wavelet.
 
 # Example
 ```julia

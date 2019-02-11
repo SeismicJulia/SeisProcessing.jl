@@ -4,19 +4,19 @@
 Gain a group of traces.
 
 # Arguments
-* `d::Array{Real,2}`: two dimensional data.
+- `d::Array{Real,2}`: two dimensional data.
 
 # Keyword arguments
-* `dt::Real=0.002`: sampling interval in secs.
-* `kind::AbstractString="time"`: if kind="time", gain = t.^a . * exp(-bt);
+- `dt::Real=0.002`: sampling interval in secs.
+- `kind::AbstractString="time"`: if kind="time", gain = t.^a . * exp(-bt);
                          if kind="agc", automatic gain control is applied.
-* `param::Vector{Real}=[2.0,0.0]`: if kind="time", param = [a,b];
+- `param::Vector{Real}=[2.0,0.0]`: if kind="time", param = [a,b];
                                    if kind="agc", param = [agc_gate]
-* `norm::Int=0`: `norm=0` no normalization; `norm=1` normalize each trace by
+- `norm::Int=0`: `norm=0` no normalization; `norm=1` normalize each trace by
                   amplitude; `norm=2` normalize each trace by rms value/
 
 # Output
-* d::Array{Real, 2}`: gained two dimensional data.
+- d::Array{Real, 2}`: gained two dimensional data.
 
 # Example
 ```julia
@@ -56,9 +56,9 @@ function SeisGain(d::Array{Td,2}; dt::Real=0.004, kind::AbstractString="time",
         for k = 1:nx
             aux =  d[:,k]
             e = aux.^2
-            rms = sqrt(abs.(conv(e,h)[L+1:nt+L]))
+            rms = sqrt.(abs.(conv(e,h)[L+1:nt+L]))
             epsi = 1.e-10*maximum(rms)
-            op = rms./(rms.^2+epsi)
+            op = rms./(rms.^2 .+ epsi)
             dout[:,k] = d[:,k].*op
         end
     end
@@ -88,5 +88,5 @@ function SeisGain(d::Array{Td,2}; dt::Real=0.004, kind::AbstractString="time",
 end
 
 function triang(n::Integer)
-    [1 - abs((k - (n-1)/2))/(n/2) for k=0:(n-1)]
+    convert(Array{Float32,1},[1 - abs((k - (n-1)/2))/(n/2) for k=0:(n-1)])
 end

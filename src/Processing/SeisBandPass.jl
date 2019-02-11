@@ -4,17 +4,17 @@
 Apply a bandpass filter to seismic data. Input and output data is in tx domain. Filter is applied in fx domain.
 
 # Arguments
-* `in`: Input 2D data array in tx domain. Time is first dimension. 
+- `in`: Input 2D data array in tx domain. Time is first dimension.
 
 # Keyword arguments
-* `dt=0.004`: time sampling interval in secs.
-* `fa=0`: lower frequency cut [Hz]
-* `fb=0`: lower frequency banpass [Hz]
-* `fc=60`: upper frequency bandpass [Hz]
-* `fd=80`: upper frequency cut [Hz]
+- `dt=0.004`: time sampling interval in secs.
+- `fa=0`: lower frequency cut [Hz]
+- `fb=0`: lower frequency banpass [Hz]
+- `fc=60`: upper frequency bandpass [Hz]
+- `fd=80`: upper frequency cut [Hz]
 
 # Output
-* `d`: Filtered 2d data array in tx domain.
+- `d`: Filtered 2d data array in tx domain.
 
 # Example
 ```

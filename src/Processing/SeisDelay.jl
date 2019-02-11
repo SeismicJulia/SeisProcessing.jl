@@ -4,14 +4,14 @@
 Apply a time delay to 2D data
 
 # Arguments
-* `in`: input 2D data array in tx domain. First dimension is time. 
+- `in`: input 2D data array in tx domain. First dimension is time.
 
 # Keyword arguments
-* `delay=0.1`: desired time delay in secs.
-* `dt=0.004`: time sampling interval in secs.
+- `delay=0.1`: desired time delay in secs.
+- `dt=0.004`: time sampling interval in secs.
 
 # Output
-* `d2`: Delayed data in time domain
+- `d2`: Delayed data in time domain
 # Example
 ```julia
 julia> d = SeisLinearEvents(); deli = SeisDelay(d);

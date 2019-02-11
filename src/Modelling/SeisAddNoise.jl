@@ -1,16 +1,19 @@
 """
     SeisAddNoise(d, snr; <keyword arguments>)
-Add noise at a given signal-to-noise ratio level `snr` to an N-dimensional input
-data `d`. Noise can be band limited using kewyord `L`.
+
+Add noise to an N-dimensional input
+data `d`. Should specify the signal-to-noise ratio level `snr`.
+Noise can be band limited using kewyord `L`.
+
 # Arguments
-* `d::Array{Real, N}`: N-dimensional data.
-* `snr::Real`: signal-to-noise ratio.
-# Keyword arguments
-* `db::Bool=false`: `db=false` if `snr` is given by amplitude, `db=true` if
+- `d::Array{Real, N}`: N-dimensional data.
+- `snr::Real`: signal-to-noise ratio.
+- `db::Bool=false`: Flag is false if snr is given by amplitude. Flag is true if
 snr is given in dB.
-* `pdf::AbstractString="gaussian"`: random noise probability distribution:
+- `pdf::AbstractString="gaussian"`: random noise probability distribution:
 `"gaussian"` or `"uniform"`.
-* `L::Int=1`: averaging operator length to band-limit the random noise.
+- `L::Int=1`: averaging operator length to band-limit the random noise.
+
 # Examples
 ```julia
 julia> using PyPlot

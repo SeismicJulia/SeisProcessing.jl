@@ -1,18 +1,16 @@
 """
-```
-SeisDiff(d ; <keyword arguments>)
-```
+	SeisDiff(d ; <keyword arguments>)
 
-Apply differentiation to seismic traces in freq. It can also be 
-used to apply a phase rotation 
+Apply differentiation to seismic traces in freq. It can also be
+used to apply a phase rotation
 
 # Arguments
-* `d`: Input 2D data array in tx domain. First dimension is time.
+- `d`: Input 2D data array in tx domain. First dimension is time.
 
 # Keyword arguments
-* `delay=0.1`: desired time delay in seconds.
-* `pow=-2`: order of derivative
-* `rot=0`: constant phase shift or rotation 
+- `delay=0.1`: desired time delay in seconds.
+- `pow=-2`: order of derivative
+- `rot=0`: constant phase shift or rotation
 
 
 # Example
@@ -20,7 +18,7 @@ used to apply a phase rotation
 julia> d = SeisLinearEvents(); SeisPlotTX(d);
 julia> d2 = SeisDiff(d;dt=0.004,pow=1); SeisPlotTX(d);
 ```
-"""	
+"""
 function SeisDiff(d;dt=0.004,pow=-2,rot=0)
 
 	nt = size(d,1)
