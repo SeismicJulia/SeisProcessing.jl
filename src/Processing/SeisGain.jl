@@ -41,7 +41,7 @@ function SeisGain(d::Array{Td,2}; dt::Real=0.004, kind::AbstractString="time",
         a = param[1]
         b = param[2]
         t = collect(0:1:nt-1)*dt
-        tgain = (t.^a).*exp.(b.*t)
+        tgain = [(t[i]^a)*exp(b*t[i]) for i =1:nt]
         for k = 1:nx
             dout[:,k] = d[:,k].*tgain
         end
@@ -55,11 +55,13 @@ function SeisGain(d::Array{Td,2}; dt::Real=0.004, kind::AbstractString="time",
 
         for k = 1:nx
             aux =  d[:,k]
-            e = aux.^2
-            rms = sqrt.(abs.(conv(e,h)[L+1:nt+L]))
+            e = [aux[i]^2 for i =1:length(aux)]
+            c = conv(e,h)[L+1:nt+L]
+            nc = length(c)
+            rms = [sqrt(abs(c[i])) for i=1:nc]
             epsi = 1.e-10*maximum(rms)
-            op = rms./(rms.^2 .+ epsi)
-            dout[:,k] = d[:,k].*op
+            op = [rms[i]/(rms[i]^2 + epsi) for i =1:nc]
+            dout[:,k] = d[:,k] .* op
         end
     end
 
@@ -67,8 +69,8 @@ function SeisGain(d::Array{Td,2}; dt::Real=0.004, kind::AbstractString="time",
 
         for k = 1:nx
             aux =  d[:,k]
-            amax = maximum(abs.(aux))
-            dout[:,k] = dout[:,k]/amax
+            amax = maximum([abs(aux[i]) for i=1:length(aux)])
+            dout[:,k] = dout[:,k] ./ amax
         end
 
     end
@@ -77,8 +79,8 @@ function SeisGain(d::Array{Td,2}; dt::Real=0.004, kind::AbstractString="time",
 
         for k = 1:nx
             aux = d[:,k];
-            amax = sqrt(sum(aux.^2)/nt);
-            dout[:,k] = dout[:,k]/amax;
+            amax = [sqrt(sum(aux[i]^2)/nt) for i=1:length(aux)];
+            dout[:,k] = dout[:,k] ./ amax;
         end
 
     end
