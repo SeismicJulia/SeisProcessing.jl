@@ -40,8 +40,8 @@ function SeisBandPass(d;dt=0.004,fa=0,fb=0,fc=60,fd=80)
 		iw_max = round(Int,floor(0.5/dt))
 	end
 
-	d = pad_first_axis(dn,nf)
-	m = fft(d,1)/sqrt(size(d,1))
+	dp = pad_first_axis(dn,nf)
+	m = fft(dp,1)/sqrt(size(dp,1))
 	if fa > 0.
 		m[1,:] *= 0.
 	end
