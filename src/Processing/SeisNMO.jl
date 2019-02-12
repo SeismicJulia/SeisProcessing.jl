@@ -18,7 +18,8 @@ function SeisNMO(in;dt=0.001,offset=1000.,tnmo=[0.],vnmo=[1500.],max_stretch=100
 		ti = collect(0:1:nt-1)*dt
 #g = InterpIrregular(tnmo, vnmo, BCnan, InterpLinear)
 		g = interpolate(tnmo, vnmo, Gridded(Linear()))
-		vi = g[ti]
+		ge = extrapolate(g, Line())
+		vi = ge(ti)
 	end
 	out = zeros(size(in))
 	M = zeros(nt,1)
