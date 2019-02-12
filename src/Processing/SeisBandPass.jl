@@ -1,7 +1,7 @@
 """
     SeisBandPass(in; <keyword arguments>)
 
-Apply a bandpass filter to seismic data. Input and output data is in tx domain. Filter is applied in fx domain.
+Apply a bandpass filter to seismic data. Input and output data is 2D in tx domain. Filter is applied in fx domain.
 
 # Arguments
 - `in`: Input 2D data array in tx domain. Time is first dimension.
@@ -13,8 +13,6 @@ Apply a bandpass filter to seismic data. Input and output data is in tx domain. 
 - `fc=60`: upper frequency bandpass [Hz]
 - `fd=80`: upper frequency cut [Hz]
 
-# Output
-- `d`: Filtered 2d data array in tx domain.
 
 # Example
 ```

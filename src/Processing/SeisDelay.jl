@@ -10,8 +10,6 @@ Apply a time delay to 2D data
 - `delay=0.1`: desired time delay in secs.
 - `dt=0.004`: time sampling interval in secs.
 
-# Output
-- `d2`: Delayed data in time domain
 # Example
 ```julia
 julia> d = SeisLinearEvents(); deli = SeisDelay(d);

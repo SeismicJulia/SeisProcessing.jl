@@ -14,8 +14,7 @@ Apply random or regular decimation to a multidimensional array of data. Input an
 - `incx3=1`: consecutive traces zeroed in third dimension.
 - `incx4=1`: consecutive traces zeroed in fourth dimension.
 
-# Output
-Decimated array
+
 # Example
 ```julia
 julia> d = SeisLinearEvents(); deci = SeisDecimate(d);
