@@ -41,7 +41,7 @@ function SeisGain(d::Array{Td,2}; dt::Real=0.004, kind::AbstractString="time",
 
         tgain = [(t[i]^a)*exp(b*t[i]) for i in 1:nt]
 
-        dout = [d[i,k]*tgain[i] for k in 1:nx, for i in 1:nt]
+        dout = [d[i,k]*tgain[i] for k in 1:nx, i in 1:nt]
 
     end
 
