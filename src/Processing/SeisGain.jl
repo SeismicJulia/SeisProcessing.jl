@@ -1,22 +1,20 @@
 """
     SeisGain(d, t; <keyword arguments>)
 
-Gain a group of traces.
+Gain a group of traces. Input and output are 2D.
 
 # Arguments
-* `d::Array{Real,2}`: two dimensional data.
+- `d::Array{Real,2}`: two dimensional data.
 
 # Keyword arguments
-* `dt::Real=0.002`: sampling interval in secs.
-* `kind::AbstractString="time"`: if kind="time", gain = t.^a . * exp(-bt);
+- `dt::Real=0.004`: sampling interval in secs.
+- `kind::AbstractString="time"`: if kind="time", gain = t.^a . * exp(-bt);
                          if kind="agc", automatic gain control is applied.
-* `param::Vector{Real}=[2.0,0.0]`: if kind="time", param = [a,b];
+- `param::Vector{Real}=[2.0,0.0]`: if kind="time", param = [a,b];
                                    if kind="agc", param = [agc_gate]
-* `norm::Int=0`: `norm=0` no normalization; `norm=1` normalize each trace by
+- `norm::Int=0`: `norm=0` no normalization; `norm=1` normalize each trace by
                   amplitude; `norm=2` normalize each trace by rms value/
 
-# Output
-* d::Array{Real, 2}`: gained two dimensional data.
 
 # Example
 ```julia
@@ -38,37 +36,35 @@ function SeisGain(d::Array{Td,2}; dt::Real=0.004, kind::AbstractString="time",
 
     if kind == "time"   # Geometrical spreading-like gain
 
-        a = param[1]
-        b = param[2]
+        a,b = param
         t = collect(0:1:nt-1)*dt
-        tgain = (t.^a).*exp.(b.*t)
-        for k = 1:nx
-            dout[:,k] = d[:,k].*tgain
-        end
+
+        tgain = [(t[i]^a)*exp(b*t[i]) for i in 1:nt]
+        dout = [d[i,k]*tgain[i] for i in 1:nt, k in 1:nx]
 
     end
 
-    if kind=="agc"   # AGC
+    if kind=="agc"   #AGC
 
         L = floor(Int,round(param[1]/(2dt)))
-        h = triang(2*L+1)
+        h = triang(2L+1)
 
         for k = 1:nx
-            aux =  d[:,k]
-            e = aux.^2
-            rms = sqrt(abs.(conv(e,h)[L+1:nt+L]))
+            e = [d[i,k]^2 for i in 1:nt]
+            c = conv(e,h)[L+1:nt+L]
+            nc = length(c)
+            rms = [sqrt(abs(c[i])) for i in 1:nc]
             epsi = 1.e-10*maximum(rms)
-            op = rms./(rms.^2+epsi)
-            dout[:,k] = d[:,k].*op
+            op = [rms[i]/(rms[i]^2 + epsi) for i in 1:nc]
+            dout[:,k] = d[:,k] .* op
         end
     end
 
     if norm==1     # Normalize by amplitude
 
         for k = 1:nx
-            aux =  d[:,k]
-            amax = maximum(abs.(aux))
-            dout[:,k] = dout[:,k]/amax
+            amax = maximum([abs(d[i,k]) for i in 1:nt])
+            dout[:,k] = dout[:,k] ./ amax
         end
 
     end
@@ -76,9 +72,8 @@ function SeisGain(d::Array{Td,2}; dt::Real=0.004, kind::AbstractString="time",
     if norm==2;    # Normalize by rms
 
         for k = 1:nx
-            aux = d[:,k];
-            amax = sqrt(sum(aux.^2)/nt);
-            dout[:,k] = dout[:,k]/amax;
+            amax = [sqrt(sum(d[i,k]^2)/nt) for i in 1:nt];
+            dout[:,k] = dout[:,k] ./ amax;
         end
 
     end
@@ -88,5 +83,5 @@ function SeisGain(d::Array{Td,2}; dt::Real=0.004, kind::AbstractString="time",
 end
 
 function triang(n::Integer)
-    [1 - abs((k - (n-1)/2))/(n/2) for k=0:(n-1)]
+    convert(Array{Float32,1},[1 - abs((k - (n-1)/2))/(n/2) for k in 0:(n-1)])
 end

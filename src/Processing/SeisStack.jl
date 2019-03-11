@@ -3,10 +3,8 @@
 
 Stack an array of traces
 # Arguments
-* `in`: 2D seismic data
-
-# Keyword arguments
-* `normalize=true`: Normalize result by number of traces
+- `in`: 2D seismic data
+- `normalize=true`: Normalize result by number of traces
 
 ```
 """

@@ -4,10 +4,8 @@
 Calculate the envelope attribute of a group of input traces.
 
 # Arguments
-* `in`: input data. A 2D Array where the first dimension is time.
+- `in`: input data. A 2D Array where the first dimension is time.
 
-# Output
-* `d`: Envelope of input data
 
 # Example
 ```julia

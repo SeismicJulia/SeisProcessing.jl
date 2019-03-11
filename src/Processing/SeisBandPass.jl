@@ -1,20 +1,18 @@
 """
     SeisBandPass(in; <keyword arguments>)
 
-Apply a bandpass filter to seismic data. Input and output data is in tx domain. Filter is applied in fx domain.
+Apply a bandpass filter to seismic data. Input and output data is 2D in tx domain. Filter is applied in fx domain.
 
 # Arguments
-* `in`: Input 2D data array in tx domain. Time is first dimension. 
+- `in`: Input 2D data array in tx domain. Time is first dimension.
 
 # Keyword arguments
-* `dt=0.004`: time sampling interval in secs.
-* `fa=0`: lower frequency cut [Hz]
-* `fb=0`: lower frequency banpass [Hz]
-* `fc=60`: upper frequency bandpass [Hz]
-* `fd=80`: upper frequency cut [Hz]
+- `dt=0.004`: time sampling interval in secs.
+- `fa=0`: lower frequency cut [Hz]
+- `fb=0`: lower frequency banpass [Hz]
+- `fc=60`: upper frequency bandpass [Hz]
+- `fd=80`: upper frequency cut [Hz]
 
-# Output
-* `d`: Filtered 2d data array in tx domain.
 
 # Example
 ```
@@ -42,8 +40,8 @@ function SeisBandPass(d;dt=0.004,fa=0,fb=0,fc=60,fd=80)
 		iw_max = round(Int,floor(0.5/dt))
 	end
 
-	d = pad_first_axis(dn,nf)
-	m = fft(d,1)/sqrt(size(d,1))
+	dp = pad_first_axis(dn,nf)
+	m = fft(dp,1)/sqrt(size(dp,1))
 	if fa > 0.
 		m[1,:] *= 0.
 	end
