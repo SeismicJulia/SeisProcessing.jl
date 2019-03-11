@@ -20,7 +20,7 @@ Then, run the Julia application and type, at the prompt
 
 ```
 julia>using Pkg
-julia>Pkg.add("https://github.com/SeismicJulia/SeisProcessing.jl.git")
+julia>Pkg.add(PackageSpec(url="https://github.com/SeismicJulia/SeisProcessing.jl.git"))
 julia>using SeisProcessing
 ```
 
