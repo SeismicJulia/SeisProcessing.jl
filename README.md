@@ -34,10 +34,10 @@ julia>using SeisProcessing
 
 ## Contents
 1. Modelling
-SeisLinearEvents, SeisParabEvents, SeisHypEvents, SeisAddNoise, Berlage, Ormsby, Ricker, Hamming
+*SeisLinearEvents, SeisParabEvents, SeisHypEvents, SeisAddNoise, Berlage, Ormsby, Ricker, Hamming
 
 2. Processing
-SeisBandPass, SeisDecimate, SeisDelay, SeisDiff, SeisEnvelope, SeisFKFilter, SeisFXDecon, SeisGain, SeisKolmogoroff, SeisMute, SeisNMO, SeisPWD, SeisRadonFreqFor, SeisRadonFreqInv, SeisSemblance, SeisSincInterp1D, SeisSmooth1, SeisSmooth2, SeisSmoothGathers, SeisStack, MeasureSNR, TriangleFilter
+*SeisBandPass, SeisDecimate, SeisDelay, SeisDiff, SeisEnvelope, SeisFKFilter, SeisFXDecon, SeisGain, SeisKolmogoroff, SeisMute, SeisNMO, SeisPWD, SeisRadonFreqFor, SeisRadonFreqInv, SeisSemblance, SeisSincInterp1D, SeisSmooth1, SeisSmooth2, SeisSmoothGathers, SeisStack, MeasureSNR, TriangleFilter
 
 
 ## Basic usage
