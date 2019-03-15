@@ -5,6 +5,8 @@ function SeisNMO(in;dt=0.001,offset=1000.,tnmo=[0.],vnmo=[1500.],max_stretch=100
 		offset = offset[1]*fill!(similar(in[1,:]),one(eltype(in[1,:])))
 	end
 
+println("test")
+
 	# interpolate tau,v pairs to match sampling of input data
 	if (length(vnmo) == 1)
 		tnmo = convert(Float64,tnmo[1]);
@@ -21,7 +23,7 @@ function SeisNMO(in;dt=0.001,offset=1000.,tnmo=[0.],vnmo=[1500.],max_stretch=100
 		ge = extrapolate(g, Line())
 		vi = ge(ti)
 	end
-	out = zeros(size(in))
+	out = zeros(typeof(d[1,1]),size(in))
 	M = zeros(nt,1)
 	for it = 1:nt
 		for ix = 1:nx

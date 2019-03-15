@@ -31,7 +31,7 @@ function SeisGain(d::Array{Td,2}; dt::Real=0.004, kind::AbstractString="time",
                     param::Vector{Tp}=[2.0,0.0], norm::Int=0) where {Td<:Real,Tp<:Real}
 
     nt = size(d,1)
-    nx = size(d[:,:],2)
+    nx = size(d,2)
     dout = zero(d)
 
     if kind == "time"   # Geometrical spreading-like gain
@@ -51,7 +51,7 @@ function SeisGain(d::Array{Td,2}; dt::Real=0.004, kind::AbstractString="time",
 
         for k = 1:nx
             e = [d[i,k]^2 for i in 1:nt]
-            c = conv(e,h)[L+1:nt+L]
+            c = conv(promote(e,h)...)[L+1:nt+L]
             nc = length(c)
             rms = [sqrt(abs(c[i])) for i in 1:nc]
             epsi = 1.e-10*maximum(rms)
