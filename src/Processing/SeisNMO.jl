@@ -23,7 +23,7 @@ println("test")
 		ge = extrapolate(g, Line())
 		vi = ge(ti)
 	end
-	out = zeros(typeof(d[1,1]),size(in))
+	out = zeros(typeof(in[1,1]),size(in))
 	M = zeros(nt,1)
 	for it = 1:nt
 		for ix = 1:nx
