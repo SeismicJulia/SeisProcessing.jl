@@ -3,6 +3,7 @@ function SeisFXDecon(d,param=Dict())
 	dt = get(param,"dt",0.002)
 	filter_length = get(param,"filter_length",10)
 	mu = get(param,"mu",0.01)
+	println("dt= ",dt," mu= ",mu," filter_length= ",filter_length)
 	nt = size(d,1)
 	nx = size(d,2)
 	nf = nt
