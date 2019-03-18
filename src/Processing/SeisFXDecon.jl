@@ -1,5 +1,5 @@
 function SeisFXDecon(d,param=Dict())
-
+println(param)
 	dt = get(param,"dt",0.002)
 	filter_length = get(param,"filter_length",10)
 	mu = get(param,"mu",0.01)
