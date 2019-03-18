@@ -38,7 +38,6 @@ function SeisLinearEvents(; ot=0.0, dt=0.004, nt=500, ox1=0.0, dx1=10.0,
                           p1=[0.0001,-0.0003],p2=[0.,0.],p3=[0.,0],p4=[0.,0.],
                           amp=[1.0,-1.0], f0=20.0)
 
-                         println(" new")
 
     w = Ricker(dt=dt,f0=f0);
     nf = nextpow(2,nt);
@@ -55,7 +54,7 @@ function SeisLinearEvents(; ot=0.0, dt=0.004, nt=500, ox1=0.0, dx1=10.0,
     D = zeros(Complex{Float64}, nf, nx1, nx2, nx3, nx4);
     nfh = round(Int, floor(nf/2)) + 1;
     wrs = collect(0:1:nfh-1)*2*pi/(nf*dt);     # Frequency in rad/sec
-    println(n_events," ",nx1," ",nx2," ",nx3," ",nx4)
+
     for ie = 1:n_events
      for ix4 = 1:nx4
       for ix3 = 1:nx3
