@@ -41,7 +41,7 @@ function SeisMute(in::String,out::String,parameters;group="gather",key=["imx","i
 		while itrace_in <= nx
 			h = SeisMain.SeisReadHeaders(in,group=group,key=key,itrace=itrace_in,ntrace=ntrace)
 			offset = SeisMain.ExtractHeader(h,"h")
-			dt = headers[1].d1
+			dt = h[1].d1
 			num_traces = size(h,1)
 			parameters = Dict(:offset=>offset,:tmute=>tmute,:vmute=>vmute,:taper=>taper,:dt=>dt)
 			SeisProcessFile(in,out,[SeisMute],[parameters];group=group,key=key,itrace=itrace_in,ntrace=ntrace)
