@@ -26,15 +26,27 @@ function SeisMute(in::String,out::String,parameters;group="gather",key=["imx","i
 	tmute = get(parameters,:tmute,0.)
 	vmute = get(parameters,:vmute,1500.)
 	taper = get(parameters,:taper,0.1)
-
-	headers = SeisMain.SeisReadHeaders(in);
-	offset = SeisMain.ExtractHeader(headers,"h")
-	dt = headers[1].d1
 	parameters = Dict(:offset=>offset,:tmute=>tmute,:vmute=>vmute,:taper=>taper,:dt=>dt)
-	#if (adj==true)
-		SeisProcessFile(in,out,[SeisMute],[parameters];group=group,key=key,ntrace=ntrace)
-	#else
-	#	SeisProcess(m,d,[SeisMute],[parameters];key=["imx"])
-	#end
+
+	if (group=="all")
+		headers = SeisMain.SeisReadHeaders(in);
+		offset = SeisMain.ExtractHeader(headers,"h")
+		dt = headers[1].d1
+		SeisProcessFile(in,out,[SeisMute],[parameters];group=group)
+	else
+		itrace_in = 1
+		itrace_out = 1
+		nx = SeisMain.GetNumTraces(in)
+		while itrace_in <= nx
+			h = SeisMain.SeisReadHeaders(in,group=group,key=key,itrace=itrace_in,ntrace=ntrace)
+			offset = SeisMain.ExtractHeader(headers,"h")
+			dt = headers[1].d1
+			num_traces = size(h,1)
+			SeisProcessFile(in,out,[SeisMute],[parameters];group=,key=key,itrace=itrace_in,ntrace=ntrace)
+			itrace_in += num_traces
+			itrace_out += num_traces
+		end
+	end
+
 return offset
 end
