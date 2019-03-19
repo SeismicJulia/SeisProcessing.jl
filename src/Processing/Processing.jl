@@ -9,7 +9,7 @@ SeisGain,
 SeisKolmogoroff,
 SeisMute,
 SeisNMO,
-SeisProcessData,
+SeisProcessFile,
 SeisPWD,
 SeisRadonFreqFor,
 SeisRadonFreqInv,
@@ -30,7 +30,7 @@ include("SeisGain.jl")
 include("SeisKolmogoroff.jl")
 include("SeisMute.jl")
 include("SeisNMO.jl")
-include("SeisProcessData.jl")
+include("SeisProcessFile.jl")
 include("SeisPWD.jl")
 include("SeisRadonFreqFor.jl")
 include("SeisRadonFreqInv.jl")
