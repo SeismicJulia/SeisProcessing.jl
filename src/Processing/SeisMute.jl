@@ -4,7 +4,7 @@ function SeisMute(in;offset=[0.],tmute=0.,vmute=1500.,taper=0.1,dt=0.001)
 	in = reshape(in,vec[1],:)
 	nt,nx = size(in)
 	out = copy(in)
-	printl(nt," ",nx," ",dt)
+	println(nt," ",nx," ",dt)
 	for it = 1:nt
 		for ix = 1:nx
 			t = sqrt(tmute^2 + (offset[ix]/vmute).^2)
