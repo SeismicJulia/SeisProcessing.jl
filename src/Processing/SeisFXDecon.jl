@@ -1,9 +1,24 @@
 function SeisFXDecon(d,param=Dict())
-println(param)
+	#FX_DECON: SNR enhancement using fx-deconvolution.
+
+	#  [DATA_f] = fx_decon(D1,D2,dt,lf,mu,flow,fhigh);
+	# param should be defined, for example
+	# param = Dict("dt"=>dt,"filter_length"=>lf,"mu"=>mu,"fmax"=>fhigh)
+
+	#  OUT  de:     filtered data
+	#
+	#  Reference: Canales, 1984, Random noise reduction, 54.th. Ann. Internat.
+	#             Mtg., Soc. Expl. Geophys., Expanded Abstracts, pp. 525-527
+	#
+	#  Note: Canales' method is modified to use non Toeplitz system of equations
+	#        with backward and forward prediction filters
+	#
+
+
+
 	dt = get(param,"dt",0.002)
 	filter_length = get(param,"filter_length",10)
 	mu = get(param,"mu",0.01)
-	println("dt= ",dt," mu= ",mu," filter_length= ",filter_length)
 	nt = size(d,1)
 	nx = size(d,2)
 	nf = nt
