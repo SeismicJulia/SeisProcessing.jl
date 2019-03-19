@@ -44,6 +44,7 @@ function SeisMute(in::String,out::String,parameters;group="gather",key=["imx","i
 			dt = h[1].d1
 			num_traces = size(h,1)
 			parameters = Dict(:offset=>offset,:tmute=>tmute,:vmute=>vmute,:taper=>taper,:dt=>dt)
+			println(itrace_in," ",num_traces," ",itrace_out)
 			SeisProcessFile(in,out,[SeisMute],[parameters];group=group,key=key,itrace=itrace_in,ntrace=ntrace)
 			itrace_in += num_traces
 			itrace_out += num_traces
