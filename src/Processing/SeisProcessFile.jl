@@ -48,7 +48,6 @@ function SeisProcessFile(in::String,out::String,operators,parameters;group="gath
 			d1,h1,e1 = SeisMain.SeisRead(in,group=group,key=key,itrace=itrace_in,ntrace=ntrace)
             nt=size(d1,1)
 			num_traces_in = size(reshape(d1,nt,:),2)
-            println(num_traces_in)
 			for j = 1 : length(operators)
 				op = operators[j]
 				d2 = op(d1;parameters[j]...)

@@ -4,6 +4,7 @@ function SeisMute(in;offset=[0.],tmute=0.,vmute=1500.,taper=0.1,dt=0.001)
 	in = reshape(in,vec[1],:)
 	nt,nx = size(in)
 	out = copy(in)
+	printl(nt," ",nx," ",dt)
 	for it = 1:nt
 		for ix = 1:nx
 			t = sqrt(tmute^2 + (offset[ix]/vmute).^2)
@@ -35,5 +36,5 @@ function SeisMute(in::String,out::String,parameters;group="gather",key=["imx","i
 	#else
 	#	SeisProcess(m,d,[SeisMute],[parameters];key=["imx"])
 	#end
-
+return offset
 end
