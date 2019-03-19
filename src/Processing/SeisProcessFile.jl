@@ -33,19 +33,19 @@ julia> SeisProcessFile(filein,fileout,operators,param,key=["sx"])
 function SeisProcessFile(in::String,out::String,operators,parameters;group="gather",key=["imx","imy"],ntrace=10000)
 
 	if (group=="all")
-		d1,h1,e1 = SeisRead(in,group=group,key=key,itrace=1,ntrace=ntrace)
+		d1,h1,e1 = SeisMain.SeisRead(in,group=group,key=key,itrace=1,ntrace=ntrace)
 		for j = 1 : length(operators)
 			op = operators[j]
 			d2 = op(d1;parameters[j]...)
 			d1 = copy(d2)
 		end
-		SeisWrite(out,d1,h1,e1)
+		SeisMain.SeisWrite(out,d1,h1,e1)
 	else
 		itrace_in = 1
 		itrace_out = 1
 		nx = SeisMain.GetNumTraces(in)
 		while itrace_in <= nx
-			d1,h1,e1 = SeisRead(in,group=group,key=key,itrace=itrace_in,ntrace=ntrace)
+			d1,h1,e1 = SeisMain.SeisRead(in,group=group,key=key,itrace=itrace_in,ntrace=ntrace)
             nt=size(d1,1)
 			num_traces_in = size(reshape(d1,nt,:),2)
             println(num_traces_in)
@@ -55,7 +55,7 @@ function SeisProcessFile(in::String,out::String,operators,parameters;group="gath
 				d1 = copy(d2)
 			end
 			num_traces_out = size(d1,2)
-			SeisWrite(out,d1,h1,e1,itrace=itrace_out)
+			SeisMain.SeisWrite(out,d1,h1,e1,itrace=itrace_out)
 			itrace_in += num_traces_in
 			itrace_out += num_traces_out
 		end
@@ -76,21 +76,21 @@ function SeisProcess(in1::String,in2::String,out::String,operators,parameters;gr
 	ntrace = get(param,"ntrace",100)
 
 	if (group=="all")
-		d1,h1 = SeisRead(in1,group=group,key=key,itrace=1,ntrace=ntrace)
-		d2,h2 = SeisRead(in2,group=group,key=key,itrace=1,ntrace=ntrace)
+		d1,h1 = SeisMain.SeisRead(in1,group=group,key=key,itrace=1,ntrace=ntrace)
+		d2,h2 = SeisMain.SeisRead(in2,group=group,key=key,itrace=1,ntrace=ntrace)
 		for ifunc = 1 : length(operators)
 			func = operators[ifunc]
 			d3,h3 = func(d1,d2,param)
 			d1 = copy(d3)
 		end
-		SeisWrite(out,d1,h1)
+		SeisMain.SeisWrite(out,d1,h1)
 	else
 		itrace_in = 1
 		itrace_out = 1
 		nx = SeisMain.GetNumTraces(in1)
 		while itrace_in <= nx
-			d1,h1 = SeisRead(in1,group=group,key=key,itrace=itrace_in,ntrace=ntrace)
-			d2,h2 = SeisRead(in2,group=group,key=key,itrace=itrace_in,ntrace=ntrace)
+			d1,h1 = SeisMain.SeisRead(in1,group=group,key=key,itrace=itrace_in,ntrace=ntrace)
+			d2,h2 = SeisMain.SeisRead(in2,group=group,key=key,itrace=itrace_in,ntrace=ntrace)
             nt = size(d1,1)
 			num_traces_in = size(reshape(d1,nt,:),2)
 			for ifunc = 1 : length(operators)
@@ -100,7 +100,7 @@ function SeisProcess(in1::String,in2::String,out::String,operators,parameters;gr
 			end
             nt_out = size(d1,1)
 			num_traces_out = size(reshape(d1,nt_out,:),2)
-			SeisWrite(out,d1,h1,itrace=itrace_out)
+			SeisMain.SeisWrite(out,d1,h1,itrace=itrace_out)
 			itrace_in += num_traces_in
 			itrace_out += num_traces_out
 		end
