@@ -53,7 +53,7 @@ function SeisProcessFile(in::String,out::String,operators,parameters;group="gath
             nx = ntrace
         end
 println("nx = ",nx," itrace+nx = ",itrace+nx)
-        while itrace_out <= itrace+nx || it
+        while itrace_out <= itrace+nx
 			d1,h1,e1 = SeisMain.SeisRead(in,group=group,key=key,itrace=itrace_in,ntrace=ntrace)
             nt=size(d1,1)
 			num_traces_in = size(reshape(d1,nt,:),2)
@@ -67,7 +67,7 @@ println("nx = ",nx," itrace+nx = ",itrace+nx)
 			itrace_in += num_traces_in
 			itrace_out += num_traces_out
             println("itrace_out = ",itrace_out)
-            
+
 		end
 	end
 
