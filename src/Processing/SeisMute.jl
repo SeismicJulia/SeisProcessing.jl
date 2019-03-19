@@ -26,12 +26,13 @@ function SeisMute(in::String,out::String,parameters;group="gather",key=["imx","i
 	tmute = get(parameters,:tmute,0.)
 	vmute = get(parameters,:vmute,1500.)
 	taper = get(parameters,:taper,0.1)
-	parameters = Dict(:offset=>offset,:tmute=>tmute,:vmute=>vmute,:taper=>taper,:dt=>dt)
 
 	if (group=="all")
 		headers = SeisMain.SeisReadHeaders(in);
 		offset = SeisMain.ExtractHeader(headers,"h")
 		dt = headers[1].d1
+		parameters = Dict(:offset=>offset,:tmute=>tmute,:vmute=>vmute,:taper=>taper,:dt=>dt)
+
 		SeisProcessFile(in,out,[SeisMute],[parameters];group=group)
 	else
 		itrace_in = 1
@@ -42,6 +43,7 @@ function SeisMute(in::String,out::String,parameters;group="gather",key=["imx","i
 			offset = SeisMain.ExtractHeader(headers,"h")
 			dt = headers[1].d1
 			num_traces = size(h,1)
+			parameters = Dict(:offset=>offset,:tmute=>tmute,:vmute=>vmute,:taper=>taper,:dt=>dt)
 			SeisProcessFile(in,out,[SeisMute],[parameters];group=group,key=key,itrace=itrace_in,ntrace=ntrace)
 			itrace_in += num_traces
 			itrace_out += num_traces
