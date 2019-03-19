@@ -31,7 +31,7 @@ function SeisMute(in::String,out::String,parameters;group="gather",key=["imx","i
 	dt = headers[1].d1
 	parameters = Dict(:offset=>offset,:tmute=>tmute,:vmute=>vmute,:taper=>taper,:dt=>dt)
 	#if (adj==true)
-		SeisProcess(d,m,[SeisMute],[parameters];group=group,key=key,ntrace=ntrace)
+		SeisProcess(in,out,[SeisMute],[parameters];group=group,key=key,ntrace=ntrace)
 	#else
 	#	SeisProcess(m,d,[SeisMute],[parameters];key=["imx"])
 	#end
