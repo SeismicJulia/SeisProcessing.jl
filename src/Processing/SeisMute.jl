@@ -21,7 +21,6 @@ function SeisMute(in;offset=[0.],tmute=0.,vmute=1500.,taper=0.1,dt=0.001)
 end
 
 function SeisMute(in::String,out::String,parameters;group="gather",key=["imx","imy"],ntrace=10000)
-	tmute=0.,vmute=1500.,taper=0.1,dt=0.001)
 
 	tmute = get(parameters,:tmute,0.)
 	vmute = get(parameters,:vmute,1500.)
