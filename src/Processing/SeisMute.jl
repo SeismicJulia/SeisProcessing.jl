@@ -1,7 +1,7 @@
 function SeisMute(in;offset=[0.],tmute=0.,vmute=1500.,taper=0.1,dt=0.001)
 
-	vec= size(d)
-	in = reshape(d,vec[1],:)
+	vec= size(in)
+	in = reshape(in,vec[1],:)
 	nx = size(in,2)
 	out = copy(in)
 	for it = 1:nt
