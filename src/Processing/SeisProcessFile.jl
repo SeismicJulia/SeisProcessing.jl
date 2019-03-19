@@ -18,7 +18,7 @@ sequentially on the same group of traces.
 # Keyword arguments
 - `group="gather"` : Options are all, some or gather
 - `key=["imx","imy"]` : Defines type of gather
-- `itrace=1` : Initial traces 
+- `itrace=1` : Initial traces
 - `ntrace=10000` : Total number of traces to process at once
 
 # Example
@@ -31,7 +31,7 @@ julia> SeisProcessFile(filein,fileout,operators,param,key=["sx"])
 ```
 
 """
-function SeisProcessFile(in::String,out::String,operators,parameters;group="gather",key=["imx","imy"],itrace=1,ntrace=10000)
+function SeisProcessFile(in::String,out::String,operators,parameters;group="gather",key=["imx","imy"],itrace=1,ntrace=0)
 
 	if (group=="all")
 		d1,h1,e1 = SeisMain.SeisRead(in,group=group,key=key,itrace=1,ntrace=ntrace)
@@ -42,10 +42,17 @@ function SeisProcessFile(in::String,out::String,operators,parameters;group="gath
 		end
 		SeisMain.SeisWrite(out,d1,h1,e1)
 	else
-		itrace_in = 1
-		itrace_out = 1
-		nx = SeisMain.GetNumTraces(in)
-		while itrace_in <= nx
+		#itrace_in = 1
+		#itrace_out = 1
+        itrace_in = itrace
+        itrace_out = itrace
+        if ntrace == 0
+            nx = SeisMain.GetNumTraces(in)
+        else
+            nx = ntrace
+        end
+
+        while itrace_in <= nx
 			d1,h1,e1 = SeisMain.SeisRead(in,group=group,key=key,itrace=itrace_in,ntrace=ntrace)
             nt=size(d1,1)
 			num_traces_in = size(reshape(d1,nt,:),2)
