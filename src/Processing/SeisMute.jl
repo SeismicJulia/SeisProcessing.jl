@@ -40,7 +40,7 @@ function SeisMute(in::String,out::String,parameters;group="gather",key=["imx","i
 		nx = SeisMain.GetNumTraces(in)
 		while itrace_in <= nx
 			h = SeisMain.SeisReadHeaders(in,group=group,key=key,itrace=itrace_in,ntrace=ntrace)
-			offset = SeisMain.ExtractHeader(headers,"h")
+			offset = SeisMain.ExtractHeader(h,"h")
 			dt = headers[1].d1
 			num_traces = size(h,1)
 			parameters = Dict(:offset=>offset,:tmute=>tmute,:vmute=>vmute,:taper=>taper,:dt=>dt)
