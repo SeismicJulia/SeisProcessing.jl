@@ -4,7 +4,7 @@ function SeisMute(in;offset=[0.],tmute=0.,vmute=1500.,taper=0.1,dt=0.001)
 	in = reshape(in,vec[1],:)
 	nt,nx = size(in)
 	out = copy(in)
-	println(nt," ",nx," ",dt)
+	println("nt = ",nt," nx= ",nx, "dt= ",dt)
 	for it = 1:nt
 		for ix = 1:nx
 			t = sqrt(tmute^2 + (offset[ix]/vmute).^2)
@@ -44,7 +44,7 @@ function SeisMute(in::String,out::String,parameters;group="gather",key=["imx","i
 			dt = h[1].d1
 			num_traces = size(h,1)
 			parameters = Dict(:offset=>offset,:tmute=>tmute,:vmute=>vmute,:taper=>taper,:dt=>dt)
-			println(itrace_in," ",num_traces," ",itrace_out)
+			println("itrace_in = ",itrace_in ", num_traces= ",num_traces, ", itrace_out= ",itrace_out)
 			SeisProcessFile(in,out,[SeisMute],[parameters];group=group,key=key,itrace=itrace_in,ntrace=ntrace)
 			itrace_in += num_traces
 			itrace_out += num_traces
