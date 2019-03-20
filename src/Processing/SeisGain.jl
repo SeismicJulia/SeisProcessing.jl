@@ -116,7 +116,7 @@ function SeisGain(in::String,out::String,parameters;group="gather",key=["imx","i
     parameters = Dict(:dt=>dt,:kind=>kind,:coef=>coef,:normal=>normal)
 
 
-	SeisProcessFile(in,out,[SeisGain],[parameters];group=group,key=key,itrace=itrace_in,ntrace=ntrace)
+	SeisProcessFile(in,out,[SeisGain],[parameters];group=group,key=key,itrace=itrace,ntrace=ntrace)
 end
 
 
