@@ -90,7 +90,7 @@ end
 # Arguments
 - `in::String`: Input file - Seis format
 - `out::String`: Output file - Seis format.
-- `parameters` : list of the keyword arguments for the function SeisMute.
+- `parameters` : list of the keyword arguments for the function SeisGain.
 
 # Keyword arguments
 - `group="gather"` : Options are all, some or gather
