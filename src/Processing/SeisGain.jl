@@ -113,7 +113,7 @@ function SeisGain(in::String,out::String,parameters;group="gather",key=["imx","i
 
     headers = SeisMain.SeisReadHeaders(in);
     dt = headers[1].d1
-    parameters = Dict(:dt=>dt:kind=>kind,:coef=>coef,:normal=>normal)
+    parameters = Dict(:dt=>dt,:kind=>kind,:coef=>coef,:normal=>normal)
 
 
 	SeisProcessFile(in,out,[SeisGain],[parameters];group=group,key=key,itrace=itrace_in,ntrace=ntrace)
