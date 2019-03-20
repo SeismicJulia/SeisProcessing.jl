@@ -63,7 +63,7 @@ julia> SeisMute(filein,fileout, param,group="some")
 ```
 
 """
-function SeisMute(in::String,out::String,parameters;group="gather",key=["imx","imy"],itrace=1,ntrace=10000)
+function SeisNMO(in::String,out::String,parameters;group="gather",key=["imx","imy"],itrace=1,ntrace=10000)
 
 	tnmo = get(parameters,:tnmo,[0.])
 	vnmo = get(parameters,:vnmo,[1500.])
