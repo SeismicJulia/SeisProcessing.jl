@@ -73,9 +73,9 @@ end
 
 
 
-function SeisProcessFile(in::Array{String,1},out::Array{String,1},operators,parameters;group="gather",key=["imx","imy"],ntrace=10000)
+function SeisProcessFile(in::Array{String,1},out::Array{String,1},operators,parameters;group="gather",key=["imx","imy"],itrace=1,ntrace=10000)
 	for j = 1 : length(in)
-		SeisProcess(in[j],out[j],parameters;group=group,key=key,ntrace=ntrace)
+		SeisProcess(in[j],out[j],parameters;group=group,key=key,itrace=itrace,ntrace=ntrace)
 	end
 
 end
@@ -89,7 +89,7 @@ Run processing flows that read from 2 files and write to disk
 # Arguments
 - `in1::String`: input filename - Seis format.
 - `in2::String`: input filename - Seis format.
-- `out::String`: output filename - Seis format. 
+- `out::String`: output filename - Seis format.
 - `operators`
 - `parameters`
 
@@ -111,7 +111,7 @@ julia> SeisProcessFile(filein,fileout,operators,param,key=["sx"])
 """
 
 
-function SeisProcessFile(in1::String,in2::String,out::String,operators,parameters;group="gather",key=["imx","imy"],ntrace=10000)
+function SeisProcessFile(in1::String,in2::String,out::String,operators,parameters;group="gather",key=["imx","imy"],itrace=1,ntrace=10000)
 	group = get(param,"group","some")
 	key = get(param,"key",["imx","imy"])
 	ntrace = get(param,"ntrace",100)
