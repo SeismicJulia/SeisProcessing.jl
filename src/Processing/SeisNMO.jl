@@ -89,7 +89,7 @@ function SeisNMO(in::String,out::String,parameters;group="gather",key=["imx","im
 			#SeisProcessFile(in,out,[SeisNMO],[parameters];group=group,key=key,itrace=itrace_in,ntrace=ntrace)
 			d1,h1,e1 = SeisMain.SeisRead(in,group=group,key=key,itrace=itrace_in,ntrace=ntrace)
 
-			d2 = SeisNMO(d1;parameters[j]...)
+			d2 = SeisNMO(d1;parameters...)
 			d1 = copy(d2)
 
 			SeisMain.SeisWrite(out,d1,h1,e1,itrace=itrace_in)
