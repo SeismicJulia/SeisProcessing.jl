@@ -111,8 +111,8 @@ function SeisGain(in::String,out::String,parameters;group="gather",key=["imx","i
 	coef = get(parameters,:coef,[2.0,0.0])
 	normal = get(parameters,:normal,0)
 
-    headers = SeisMain.SeisReadHeaders(in);
-    dt = headers[1].d1
+    ext = SeisMain.ReadTextHeader(in);
+    d1 = ext.d1
     parameters = Dict(:dt=>dt,:kind=>kind,:coef=>coef,:normal=>normal)
 
 

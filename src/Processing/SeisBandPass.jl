@@ -99,8 +99,8 @@ function SeisBandPass(in::String,out::String,parameters;group="gather",key=["imx
     fc = get(parameters,:fc,60)
     fd = get(parameters,:fd,80)
 
-    headers = SeisMain.SeisReadHeaders(in);
-    dt = headers[1].d1
+    ext = SeisMain.ReadTextHeader(in);
+    dt = ext.d1
     parameters = Dict(:dt=>dt,:fa=>fa,:fb=>fb,:fc=>fc,:fd=>fd )
 
 

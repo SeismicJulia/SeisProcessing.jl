@@ -5,7 +5,6 @@ function SeisNMO(in;dt=0.001,offset=1000.,tnmo=[0.],vnmo=[1500.],max_stretch=100
 		offset = offset[1]*fill!(similar(in[1,:]),one(eltype(in[1,:])))
 	end
 
-println("test")
 
 	# interpolate tau,v pairs to match sampling of input data
 	if (length(vnmo) == 1)
@@ -41,4 +40,55 @@ println("test")
 		end
 	end
 	return out
+end
+
+"""
+    SeisNMO(in,out,parameters; <keyword arguments>)
+
+# Arguments
+- `in::String`: Input file - Seis format.
+- `out::String`: Output file - Seis format.
+- `parameters` : list of the keyword arguments for the function SeisMute.
+
+# Keyword arguments
+- `group="gather"` : Options are all, some or gather
+- `key=["imx","imy"]` : Defines type of gather
+- `itrace=1` : Initial trace number
+- `ntrace=10000` : Total number of traces to process at once
+
+# Example
+```
+julia> param = Dict(:tmute=>0.0, :vmute=>10000, :taper=>0.05,:dt=>0.01)
+julia> SeisMute(filein,fileout, param,group="some")
+```
+
+"""
+function SeisMute(in::String,out::String,parameters;group="gather",key=["imx","imy"],itrace=1,ntrace=10000)
+
+	tnmo = get(parameters,:tnmo,[0.])
+	vnmo = get(parameters,:vnmo,[1500.])
+	max_stretch = get(parameters,:max_stretch,1000)
+
+	if (group=="all")
+		headers = SeisMain.SeisReadHeaders(in);
+		offset = SeisMain.ExtractHeader(headers,"h")
+		dt = headers[1].d1
+		parameters = Dict(:offset=>offset,:tnmo=>tmute,:vnmo=>vmute,:max_stretch=>max_stretch,:dt=>dt)
+
+		SeisProcessFile(in,out,[SeisNMO],[parameters];group=group)
+	else
+		itrace_in = 1
+		itrace_out = 1
+		nx = SeisMain.GetNumTraces(in)
+		while itrace_in <= nx
+			h = SeisMain.SeisReadHeaders(in,group=group,key=key,itrace=itrace_in,ntrace=ntrace)
+			offset = SeisMain.ExtractHeader(h,"h")
+			dt = h[1].d1
+			num_traces = size(h,1)
+			parameters = Dict(:offset=>offset,:tnmo=>tmute,:vnmo=>vmute,:max_stretch=>taper,:dt=>dt)
+			SeisProcessFile(in,out,[SeisMute],[parameters];group=group,key=key,itrace=itrace_in,ntrace=ntrace)
+			itrace_in += num_traces
+			itrace_out += num_traces
+		end
+	end
 end
