@@ -63,7 +63,7 @@ function SeisProcessFile(in::String,out::String,operators,parameters;group="gath
 				d1 = copy(d2)
 			end
 			num_traces_out = size(d1,2)
-            println("itrace_in= ",itrace_in,"itrace_out = ",itrace_out," nx = ",nx," itrace+nx= ",itrace+nx)
+            println("itrace_in= ",itrace_in," itrace_out = ",itrace_out," nx = ",nx," itrace+nx= ",itrace+nx)
 			SeisMain.SeisWrite(out,d1,h1,e1,itrace=itrace_out)
 			itrace_in += num_traces_in
 			itrace_out += num_traces_out

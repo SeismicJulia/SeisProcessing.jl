@@ -77,18 +77,23 @@ function SeisNMO(in::String,out::String,parameters;group="gather",key=["imx","im
 
 		SeisProcessFile(in,out,[SeisNMO],[parameters];group=group)
 	else
-		itrace_in = 1
-		itrace_out = 1
+		itrace_in = itrace
+
 		nx = SeisMain.GetNumTraces(in)
 		while itrace_in <= nx
 			h = SeisMain.SeisReadHeaders(in,group=group,key=key,itrace=itrace_in,ntrace=ntrace)
 			offset = SeisMain.ExtractHeader(h,"h")
 			dt = h[1].d1
-			num_traces = size(h,1)
+
 			parameters = Dict(:offset=>offset,:tnmo=>tnmo,:vnmo=>vnmo,:max_stretch=>max_stretch,:dt=>dt)
-			SeisProcessFile(in,out,[SeisNMO],[parameters];group=group,key=key,itrace=itrace_in,ntrace=ntrace)
-			itrace_in += num_traces
-			itrace_out += num_traces
+			#SeisProcessFile(in,out,[SeisNMO],[parameters];group=group,key=key,itrace=itrace_in,ntrace=ntrace)
+			d1,h1,e1 = SeisMain.SeisRead(in,group=group,key=key,itrace=itrace_in,ntrace=ntrace)
+
+			d2 = SeisNMO(d1;parameters[j]...)
+			d1 = copy(d2)
+
+			SeisMain.SeisWrite(out,d1,h1,e1,itrace=itrace_in)
+			itrace_in += ntrace
 		end
 	end
 end
