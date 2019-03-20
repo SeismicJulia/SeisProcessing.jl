@@ -73,7 +73,7 @@ function SeisNMO(in::String,out::String,parameters;group="gather",key=["imx","im
 		headers = SeisMain.SeisReadHeaders(in);
 		offset = SeisMain.ExtractHeader(headers,"h")
 		dt = headers[1].d1
-		parameters = Dict(:offset=>offset,:tnmo=>tmute,:vnmo=>vmute,:max_stretch=>max_stretch,:dt=>dt)
+		parameters = Dict(:offset=>offset,:tnmo=>tnmo,:vnmo=>vnmo,:max_stretch=>max_stretch,:dt=>dt)
 
 		SeisProcessFile(in,out,[SeisNMO],[parameters];group=group)
 	else
@@ -85,8 +85,8 @@ function SeisNMO(in::String,out::String,parameters;group="gather",key=["imx","im
 			offset = SeisMain.ExtractHeader(h,"h")
 			dt = h[1].d1
 			num_traces = size(h,1)
-			parameters = Dict(:offset=>offset,:tnmo=>tmute,:vnmo=>vmute,:max_stretch=>taper,:dt=>dt)
-			SeisProcessFile(in,out,[SeisMute],[parameters];group=group,key=key,itrace=itrace_in,ntrace=ntrace)
+			parameters = Dict(:offset=>offset,:tnmo=>tnmo,:vnmo=>vnmo,:max_stretch=>max_stretch,:dt=>dt)
+			SeisProcessFile(in,out,[SeisNMO],[parameters];group=group,key=key,itrace=itrace_in,ntrace=ntrace)
 			itrace_in += num_traces
 			itrace_out += num_traces
 		end
