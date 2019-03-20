@@ -1,4 +1,23 @@
-function SeisMute(in;offset=[0.],tmute=0.,vmute=1500.,taper=0.1,dt=0.001)
+"""
+    SeisMute(d; <keyword arguments>) -> Array{Real,2}
+
+Mute trace noise before the first arrival.
+The muting function depends on the offset between source and receiver and the velocity of the first layer as
+t_mute = t_0 + offset/v1.
+
+
+# Arguments
+- `d`: Array of input traces.
+
+# Keyword arguments
+- `offset=[0.]`: Vector of distances between source and receiver.
+- `tmute=0.`: initial muting time
+- `vmute=1500.`: Velocity of the first layer.
+- `taper=0.1`: Taper of the muting function
+- `dt::Real=0.004`: sampling interval in secs.
+
+"""
+function SeisMute(in;offset=[0.],tmute=0.,vmute=1500.,taper=0.1,dt=0.004)
 
 	vec= size(in)
 	in = reshape(in,vec[1],:)
@@ -20,7 +39,34 @@ function SeisMute(in;offset=[0.],tmute=0.,vmute=1500.,taper=0.1,dt=0.001)
 	return out
 end
 
-function SeisMute(in::String,out::String,parameters;group="gather",key=["imx","imy"],ntrace=10000)
+
+"""
+    SeisMute(in,out,parameters; <keyword arguments>)
+
+Mutes noise before first arrival of traces in a file. Saves the muted traces to an output file.
+The muting function depends on the offset between source and receiver and the velocity of the first layer as
+t_mute = t_0 + offset/v1.
+
+
+# Arguments
+- `in::String`: Input file with seismic traces.
+- `out::String`: Output file with muted traces.
+- `parameters` : list of the keyword arguments for the function SeisMute.
+
+# Keyword arguments
+- `group="gather"` : Options are all, some or gather
+- `key=["imx","imy"]` : Defines type of gather
+- `itrace=1` : Initial trace number
+- `ntrace=10000` : Total number of traces to process at once
+
+# Example
+```
+julia> param = Dict(:tmute=>0.0, :vmute=>10000, :taper=>0.05,:dt=>0.01)
+julia> SeisMute(filein,fileout, param,group="some")
+```
+
+"""
+function SeisMute(in::String,out::String,parameters;group="gather",key=["imx","imy"],itrace=1,ntrace=10000)
 
 	tmute = get(parameters,:tmute,0.)
 	vmute = get(parameters,:vmute,1500.)

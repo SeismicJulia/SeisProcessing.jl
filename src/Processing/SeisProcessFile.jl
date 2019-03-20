@@ -10,9 +10,9 @@ Note that f can be a vector of functions. They will be executed
 sequentially on the same group of traces.
 
 # Arguments
-- `in::String`: input filename
-- `out::String`: output filenames
-- `operator`
+- `in`: input filename of type String or Array{String,1}
+- `out`: output filenames of type String or Array{String,1}
+- `operators`
 - `parameters`
 
 # Keyword arguments
@@ -54,7 +54,6 @@ function SeisProcessFile(in::String,out::String,operators,parameters;group="gath
         end
         while itrace_out < itrace+nx && itrace_out <= n_tr
 			d1,h1,e1 = SeisMain.SeisRead(in,group=group,key=key,itrace=itrace_in,ntrace=ntrace)
-            println(h1[end].tracenum)
             nt=size(d1,1)
 			num_traces_in = size(reshape(d1,nt,:),2)
 			for j = 1 : length(operators)
@@ -72,14 +71,47 @@ function SeisProcessFile(in::String,out::String,operators,parameters;group="gath
 
 end
 
-function SeisProcess(in::Array{String,1},out::Array{String,1},operators,parameters;group="gather",key=["imx","imy"],ntrace=10000)
+
+
+function SeisProcessFile(in::Array{String,1},out::Array{String,1},operators,parameters;group="gather",key=["imx","imy"],ntrace=10000)
 	for j = 1 : length(in)
 		SeisProcess(in[j],out[j],parameters;group=group,key=key,ntrace=ntrace)
 	end
 
 end
 
-function SeisProcess(in1::String,in2::String,out::String,operators,parameters;group="gather",key=["imx","imy"],ntrace=10000)
+
+"""
+      SeisProcessFile(in1,in2,out,operators,parameters;<keyword arguments>)
+
+Run processing flows that read from 2 files and write to disk
+
+# Arguments
+- `in1::String`: input filename
+- `in2::String`: input filename
+- `out::String`: output filename
+- `operators`
+- `parameters`
+
+# Keyword arguments
+- `group="gather"` : Options are all, some or gather
+- `key=["imx","imy"]` : Defines type of gather
+- `itrace=1` : Initial traces
+- `ntrace=10000` : Total number of traces to process at once
+
+# Example
+Apply a bandpass filter to a seismic cube sequentially, by shot gather.
+Assume dt is equal to 0.002.
+```
+julia> operators = [SeisBandPass]
+julia> param = [Dict(:dt=>0.002, :fa=>20,:fb=>30,:fc=>80,:fd=>90)]
+julia> SeisProcessFile(filein,fileout,operators,param,key=["sx"])
+```
+
+"""
+
+
+function SeisProcessFile(in1::String,in2::String,out::String,operators,parameters;group="gather",key=["imx","imy"],ntrace=10000)
 	group = get(param,"group","some")
 	key = get(param,"key",["imx","imy"])
 	ntrace = get(param,"ntrace",100)
@@ -94,10 +126,15 @@ function SeisProcess(in1::String,in2::String,out::String,operators,parameters;gr
 		end
 		SeisMain.SeisWrite(out,d1,h1)
 	else
-		itrace_in = 1
-		itrace_out = 1
-		nx = SeisMain.GetNumTraces(in1)
-		while itrace_in <= nx
+        itrace_in = itrace
+        itrace_out = itrace
+        n_tr = SeisMain.GetNumTraces(in)
+        if ntrace == 0
+            nx = n_tr
+        else
+            nx = ntrace
+        end
+		while itrace_out < itrace+nx && itrace_out <= n_tr
 			d1 = SeisMain.SeisRead(in1,group=group,key=key,itrace=itrace_in,ntrace=ntrace)
 			d2 = SeisMain.SeisRead(in2,group=group,key=key,itrace=itrace_in,ntrace=ntrace)
             nt = size(d1,1)

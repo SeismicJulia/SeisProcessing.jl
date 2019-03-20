@@ -1,5 +1,5 @@
 """
-    SeisGain(d, t; <keyword arguments>)
+    SeisGain(d ; <keyword arguments>)
 
 Gain a group of traces. Input and output are 2D.
 
@@ -10,17 +10,17 @@ Gain a group of traces. Input and output are 2D.
 - `dt::Real=0.004`: sampling interval in secs.
 - `kind::AbstractString="time"`: if kind="time", gain = t.^a . * exp(-bt);
                          if kind="agc", automatic gain control is applied.
-- `param::Vector{Real}=[2.0,0.0]`: if kind="time", param = [a,b];
-                                   if kind="agc", param = [agc_gate]
-- `norm::Int=0`: `norm=0` no normalization; `norm=1` normalize each trace by
-                  amplitude; `norm=2` normalize each trace by rms value/
+- `coef::Vector{Real}=[2.0,0.0]`: if kind="time", coef = [a,b];
+                                   if kind="agc", coef = [agc_gate]
+- `normal::Int=0`: `normal=0` no normalization; `normal=1` normalize each trace by
+                  amplitude; `normal=2` normalize each trace by rms value/
 
 
 # Example
 ```julia
 julia> using PyPlot
 julia> d = SeisHypEvents();
-       dout = SeisGain(d, kind="agc", param=[0.05]);
+       dout = SeisGain(d, kind="agc", coef=[0.05]);
        SeisPlotTX([d dout]);
 ```
 
@@ -28,7 +28,7 @@ Credits: Juan I. Sabbione, Aaron Staton, Mauricio D. Sacchi, 2016
 
 """
 function SeisGain(d::Array{Td,2}; dt::Real=0.004, kind::AbstractString="time",
-                    param::Vector{Tp}=[2.0,0.0], norm::Int=0) where {Td<:Real,Tp<:Real}
+                    coef::Vector{Tp}=[2.0,0.0], normal::Int=0) where {Td<:Real,Tp<:Real}
 
     nt = size(d,1)
     nx = size(d,2)
@@ -36,7 +36,7 @@ function SeisGain(d::Array{Td,2}; dt::Real=0.004, kind::AbstractString="time",
 
     if kind == "time"   # Geometrical spreading-like gain
 
-        a,b = param
+        a,b = coef
         t = collect(0:1:nt-1)*dt
 
         tgain = [(t[i]^a)*exp(b*t[i]) for i in 1:nt]
@@ -46,7 +46,7 @@ function SeisGain(d::Array{Td,2}; dt::Real=0.004, kind::AbstractString="time",
 
     if kind=="agc"   #AGC
 
-        L = floor(Int,round(param[1]/(2dt)))
+        L = floor(Int,round(coef[1]/(2dt)))
         h = triang(2L+1)
 
         for k = 1:nx
@@ -60,7 +60,7 @@ function SeisGain(d::Array{Td,2}; dt::Real=0.004, kind::AbstractString="time",
         end
     end
 
-    if norm==1     # Normalize by amplitude
+    if normal==1     # Normalize by amplitude
 
         for k = 1:nx
             amax = maximum([abs(d[i,k]) for i in 1:nt])
@@ -69,7 +69,7 @@ function SeisGain(d::Array{Td,2}; dt::Real=0.004, kind::AbstractString="time",
 
     end
 
-    if norm==2;    # Normalize by rms
+    if normal==2;    # Normalize by rms
 
         for k = 1:nx
             amax = [sqrt(sum(d[i,k]^2)/nt) for i in 1:nt];
@@ -81,6 +81,45 @@ function SeisGain(d::Array{Td,2}; dt::Real=0.004, kind::AbstractString="time",
     return dout
 
 end
+
+"""
+    SeisGain(in,out,parameters; <keyword arguments>)
+
+    Gain a group of traces. Input and output are file names.
+
+# Arguments
+- `in::String`: Input file with seismic traces.
+- `out::String`: Output file with muted traces.
+- `parameters` : list of the keyword arguments for the function SeisMute.
+
+# Keyword arguments
+- `group="gather"` : Options are all, some or gather
+- `key=["imx","imy"]` : Defines type of gather
+- `itrace=1` : Initial trace number
+- `ntrace=10000` : Total number of traces to process at once
+
+# Example
+```
+julia> param = Dict(:dt=>0.01,:kind=>"time",:coef=>[2.0,0.0],:normal=>0)
+julia> SeisGain(filein,fileout, param,group="all")
+```
+
+"""
+function SeisGain(in::String,out::String,parameters;group="gather",key=["imx","imy"],itrace=1,ntrace=10000)
+
+	kind = get(parameters,:kind,"time")
+	coef = get(parameters,:coef,[2.0,0.0])
+	normal = get(parameters,:normal,0)
+
+    headers = SeisMain.SeisReadHeaders(in);
+    dt = headers[1].d1
+    parameters = Dict(:dt=>dt:kind=>kind,:coef=>coef,:normal=>normal)
+
+
+	SeisProcessFile(in,out,[SeisGain],[parameters];group=group,key=key,itrace=itrace_in,ntrace=ntrace)
+end
+
+
 
 function triang(n::Integer)
     convert(Array{Float32,1},[1 - abs((k - (n-1)/2))/(n/2) for k in 0:(n-1)])
