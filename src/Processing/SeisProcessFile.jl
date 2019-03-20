@@ -10,8 +10,8 @@ Note that f can be a vector of functions. They will be executed
 sequentially on the same group of traces.
 
 # Arguments
-- `in`: input filename of type String or Array{String,1}
-- `out`: output filenames of type String or Array{String,1}
+- `in`: input filename of type String or Array{String,1} - Seis format
+- `out`: output filenames of type String or Array{String,1} - Seis format
 - `operators`
 - `parameters`
 
@@ -87,9 +87,9 @@ end
 Run processing flows that read from 2 files and write to disk
 
 # Arguments
-- `in1::String`: input filename
-- `in2::String`: input filename
-- `out::String`: output filename
+- `in1::String`: input filename - Seis format.
+- `in2::String`: input filename - Seis format.
+- `out::String`: output filename - Seis format. 
 - `operators`
 - `parameters`
 

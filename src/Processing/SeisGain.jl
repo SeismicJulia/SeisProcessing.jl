@@ -88,8 +88,8 @@ end
     Gain a group of traces. Input and output are file names.
 
 # Arguments
-- `in::String`: Input file with seismic traces.
-- `out::String`: Output file with muted traces.
+- `in::String`: Input file - Seis format
+- `out::String`: Output file - Seis format.
 - `parameters` : list of the keyword arguments for the function SeisMute.
 
 # Keyword arguments
