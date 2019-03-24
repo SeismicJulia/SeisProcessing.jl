@@ -32,7 +32,7 @@ println(size(d))
 	dn = reshape(d,nt,:)
     println(size(dn))
 	nx = size(dn,2)
-    println(nx)," ",typeof(nx))
+    println(nx," ",typeof(nx))
 	nf = iseven(nt) ? nt : nt + 1
 	df = 1/nf/dt
 	nw = round(Int,nf/2) + 1
