@@ -21,8 +21,6 @@ julia> d_filter = SeisBandPass(d;dt=0.004,fa=2,fb=8,fc=12,fd=20); SeisPlotAmplit
 julia> SeisPlot([d d_filter],title="Data and Filtered data")
 
 ```
-*Credits: Aaron Stanton,2017*
-
 """
 function SeisBandPass(d;dt=0.004,fa=0,fb=0,fc=60,fd=80)
 
@@ -30,7 +28,7 @@ function SeisBandPass(d;dt=0.004,fa=0,fb=0,fc=60,fd=80)
 	nt = size(d,1)
     #println(nt)
 	dn = reshape(d,nt,:)
-    #println(size(dn))
+    println(size(d))
 	nx = size(dn,2)
     #println(nx," ",typeof(nx))
 	nf = iseven(nt) ? nt : nt + 1
