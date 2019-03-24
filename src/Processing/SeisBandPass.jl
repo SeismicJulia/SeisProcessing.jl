@@ -29,6 +29,7 @@ function SeisBandPass(d;dt=0.004,fa=0,fb=0,fc=60,fd=80)
     nt = v[1]
     #println(nt)
 	dn = reshape(d,nt,:)
+    println(size(dn)," ",size(dn,2))
 	ntr = size(dn,2)
     nf = iseven(nt) ? nt : nt + 1
 	df = 1/nf/dt
