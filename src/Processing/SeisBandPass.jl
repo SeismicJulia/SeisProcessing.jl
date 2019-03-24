@@ -25,12 +25,11 @@ julia> SeisPlot([d d_filter],title="Data and Filtered data")
 function SeisBandPass(d;dt=0.004,fa=0,fb=0,fc=60,fd=80)
 
 #println(size(d))
-	v = size(d)
-    nt = v[1]
-    #println(nt)
+
+    nt =size(d,1)
 	dn = reshape(d,nt,:)
-    println(size(dn)," ",size(dn,2))
-	ntr = size(dn,2)
+    v = size(dn)
+	ntr = v[2]
     nf = iseven(nt) ? nt : nt + 1
 	df = 1/nf/dt
 	nw = round(Int,nf/2) + 1
@@ -69,8 +68,6 @@ function SeisBandPass(d;dt=0.004,fa=0,fb=0,fc=60,fd=80)
 	dn = real(bfft(m,1)/sqrt(size(m,1)))
     println(ntr)
 	dout = dn[1:nt,1:ntr]
-    #println(size(dout), " ",size(d))
-    prinltn(v)
 	return reshape(dout,v);
 end
 
