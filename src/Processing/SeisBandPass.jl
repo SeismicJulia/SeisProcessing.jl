@@ -68,7 +68,7 @@ function SeisBandPass(d;dt=0.004,fa=0,fb=0,fc=60,fd=80)
 		m[iw,:] = conj(m[nf-iw+2,:])
 	end
 	dn = real(bfft(m,1)/sqrt(size(m,1)))
-    println(nx
+    println(nx)
 	dout = dn[1:nt,1:nx]
     #println(size(dout), " ",size(d))
     prinltn(v)
