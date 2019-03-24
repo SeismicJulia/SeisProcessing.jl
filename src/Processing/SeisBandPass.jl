@@ -30,6 +30,7 @@ println(size(d))
 	nt = size(d,1)
     println(nt)
 	dn = reshape(d,nt,:)
+    println(size(dn))
 	nx = size(dn,2)
     println(nx," "),typeof(nx))
 	nf = iseven(nt) ? nt : nt + 1
