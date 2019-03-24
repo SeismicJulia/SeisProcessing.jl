@@ -71,6 +71,7 @@ function SeisBandPass(d;dt=0.004,fa=0,fb=0,fc=60,fd=80)
     #println(size(dn))
 	dout = dn[1:nt,1:nx]
     #println(size(dout), " ",size(d))
+    prinltn(v)
 	return reshape(dout,v);
 end
 
