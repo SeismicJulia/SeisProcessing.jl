@@ -31,6 +31,7 @@ println(size(d))
     println(nt)
 	dn = reshape(d,nt,:)
 	nx = size(dn,2)
+    println(nx," "),typeof(nx))
 	nf = iseven(nt) ? nt : nt + 1
 	df = 1/nf/dt
 	nw = round(Int,nf/2) + 1
@@ -67,7 +68,9 @@ println(size(d))
 		m[iw,:] = conj(m[nf-iw+2,:])
 	end
 	dn = real(bfft(m,1)/sqrt(size(m,1)))
+    println(size(dn))
 	dout = dn[1:nt,1:nx];
+    println(size(dout), " ",size(d))
 	return reshape(dout,size(d));
 end
 
