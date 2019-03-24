@@ -68,7 +68,7 @@ function SeisBandPass(d;dt=0.004,fa=0,fb=0,fc=60,fd=80)
 		m[iw,:] = conj(m[nf-iw+2,:])
 	end
 	dn = real(bfft(m,1)/sqrt(size(m,1)))
-    #println(size(dn))
+    println(nx
 	dout = dn[1:nt,1:nx]
     #println(size(dout), " ",size(d))
     prinltn(v)
@@ -116,7 +116,7 @@ end
 
 function pad_first_axis(a,N1)
 	n1 = size(a,1)
-	nx = size(a[:,:],2)
+	nx = size(a,2)
 	b = zeros(N1,nx)
 	for ix = 1 : nx
 		b[1:n1,ix] = a[:,ix]
