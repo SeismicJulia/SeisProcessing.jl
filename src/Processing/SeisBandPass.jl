@@ -69,9 +69,9 @@ println(size(d))
 		m[iw,:] = conj(m[nf-iw+2,:])
 	end
 	dn = real(bfft(m,1)/sqrt(size(m,1)))
-    println(size(dn))
-	dout = dn[1:nt,1:nx];
-    println(size(dout), " ",size(d))
+    #println(size(dn))
+	dout = dn[1:nt,1:nx]
+    #println(size(dout), " ",size(d))
 	return reshape(dout,size(d));
 end
 
