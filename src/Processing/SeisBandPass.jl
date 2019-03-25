@@ -24,7 +24,6 @@ julia> SeisPlot([d d_filter],title="Data and Filtered data")
 """
 function SeisBandPass(d;dt=0.004,fa=0,fb=0,fc=60,fd=80)
 
-#println(size(d))
 
     nt =size(d,1)
 	dn = reshape(d,nt,:)
