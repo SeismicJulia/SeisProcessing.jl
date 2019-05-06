@@ -108,10 +108,7 @@ julia> operators = [SeisBandPass]
 julia> param = [Dict(:dt=>0.002, :fa=>20,:fb=>30,:fc=>80,:fd=>90)]
 julia> SeisProcessFile(filein,fileout,operators,param,key=["sx"])
 ```
-
 """
-
-
 function SeisProcessFile(in1::String,in2::String,out::String,operators,parameters;group="gather",key=["imx","imy"],itrace=1,ntrace=10000)
 	group = get(param,"group","some")
 	key = get(param,"key",["imx","imy"])
