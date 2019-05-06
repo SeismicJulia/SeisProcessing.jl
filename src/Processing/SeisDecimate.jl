@@ -36,14 +36,14 @@ function SeisDecimate(in;mode="random",perc=50,incx1=1,incx2=1,incx3=1,incx4=1)
 	end
     out = reshape(out,size(in));
     else # decimate data regularly with respect to 4 spatial dimensions
-        out = zeros(in)
-	if (size(in),5) > 1
+        out = zero(in)
+	if (size(in,5)) > 1
 	    out[:,1:incx1:end,1:incx2:end,1:incx3:end,1:incx4:end] = in[:,1:incx1:end,1:incx2:end,1:incx3:end,1:incx4:end]
-	elseif (size(in),4) > 1
+	elseif (size(in,4)) > 1
             out[:,1:incx1:end,1:incx2:end,1:incx3:end] = in[:,1:incx1:end,1:incx2:end,1:incx3:end]
-        elseif (size(in),3) > 1
+        elseif (size(in,3)) > 1
             out[:,1:incx1:end,1:incx2:end] = in[:,1:incx1:end,1:incx2:end]
-        elseif (size(in),2) > 1
+        elseif (size(in,2)) > 1
             out[:,1:incx1:end] = in[:,1:incx1:end]
         end
 
