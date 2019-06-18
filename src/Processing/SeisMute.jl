@@ -95,7 +95,7 @@ function SeisMute(in::String,out::String,parameters;group="gather",key=["imx","i
 			d2 = SeisMute(d1;parameters...)
 			d1 = copy(d2)
 
-			SeisMain.SeisWrite(out,d1,h1,e1,itrace=itrace_in
+			SeisMain.SeisWrite(out,d1,h1,e1,itrace=itrace_in)
 
 			itrace_in += ntrace
 
