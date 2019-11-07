@@ -55,6 +55,9 @@ function SeisGain(d::Array{Td,2}; dt::Real=0.004, kind::AbstractString="time",
             nc = length(c)
             rms = [sqrt(abs(c[i])) for i in 1:nc]
             epsi = 1.e-10*maximum(rms)
+	    if epsi == 0
+	       epsi = 0.0001
+	    end
             op = [rms[i]/(rms[i]^2 + epsi) for i in 1:nc]
             dout[:,k] = d[:,k] .* op
         end
@@ -64,6 +67,9 @@ function SeisGain(d::Array{Td,2}; dt::Real=0.004, kind::AbstractString="time",
 
         for k = 1:nx
             amax = maximum([abs(d[i,k]) for i in 1:nt])
+	    if amax == 0
+	       amax= 0.0001
+	    end
             dout[:,k] = dout[:,k] ./ amax
         end
 
@@ -73,7 +79,11 @@ function SeisGain(d::Array{Td,2}; dt::Real=0.004, kind::AbstractString="time",
 
         for k = 1:nx
             amax = [sqrt(sum(d[i,k]^2)/nt) for i in 1:nt];
-            dout[:,k] = dout[:,k] ./ amax;
+	    if amax ==0
+	       amax = 0.0001
+	    end
+	    
+	    dout[:,k] = dout[:,k] ./ amax;
         end
 
     end
@@ -110,6 +120,7 @@ function SeisGain(in::String,out::String,parameters;group="gather",key=["imx","i
 	kind = get(parameters,:kind,"time")
 	coef = get(parameters,:coef,[2.0,0.0])
 	normal = get(parameters,:normal,0)
+	dt = get(parameters,:dt,0.004)
 
     ext = SeisMain.ReadTextHeader(in);
     d1 = ext.d1
