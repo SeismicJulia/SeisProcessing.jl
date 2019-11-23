@@ -5,6 +5,7 @@ function SeisNMO(in;dt=0.001,offset=1000.,tnmo=[0.],vnmo=[1500.],max_stretch=100
 		offset = offset[1]*fill!(similar(in[1,:]),one(eltype(in[1,:])))
 	end
 
+
 	# interpolate tau,v pairs to match sampling of input data
 	if (length(vnmo) == 1)
 		tnmo = convert(Float64,tnmo[1]);
@@ -21,7 +22,7 @@ function SeisNMO(in;dt=0.001,offset=1000.,tnmo=[0.],vnmo=[1500.],max_stretch=100
 		ge = extrapolate(g, Line())
 		vi = ge(ti)
 	end
-	out = zeros(size(in))
+	out = zeros(typeof(in[1,1]),size(in))
 	M = zeros(nt,1)
 	for it = 1:nt
 		for ix = 1:nx
@@ -39,4 +40,63 @@ function SeisNMO(in;dt=0.001,offset=1000.,tnmo=[0.],vnmo=[1500.],max_stretch=100
 		end
 	end
 	return out
+end
+
+"""
+    SeisNMO(in,out,parameters; <keyword arguments>)
+
+# Arguments
+- `in::String`: Input file - Seis format.
+- `out::String`: Output file - Seis format.
+- `parameters` : list of the keyword arguments for the function SeisMute.
+
+# Keyword arguments
+- `group="gather"` : Options are all, some or gather
+- `key=["imx","imy"]` : Defines type of gather
+- `itrace=1` : Initial trace number
+- `ntrace=10000` : Total number of traces to process at once
+
+# Example
+```
+julia> param = Dict(:tmute=>0.0, :vmute=>10000, :taper=>0.05,:dt=>0.01)
+julia> SeisMute(filein,fileout, param,group="some")
+```
+
+"""
+function SeisNMO(in::String,out::String,parameters;group="gather",key=["imx","imy"],itrace=1,ntrace=10000)
+
+	dt = get(parameters,:dt,0.001)
+	offset = get(parameters,:offset,1000)
+	tnmo = get(parameters,:tnmo,[0.])
+	vnmo = get(parameters,:vnmo,[1500.])
+	max_stretch = get(parameters,:max_stretch,1000)
+	
+
+	if (group=="all")
+		headers = SeisMain.SeisReadHeaders(in);
+		offset = SeisMain.ExtractHeader(headers,"h")
+		dt = headers[1].d1
+		parameters = Dict(:offset=>offset,:tnmo=>tnmo,:vnmo=>vnmo,:max_stretch=>max_stretch,:dt=>dt)
+
+		SeisProcessFile(in,out,[SeisNMO],[parameters];group=group)
+	else
+		itrace_in = itrace
+
+		nx = SeisMain.GetNumTraces(in)
+		while itrace_in <= nx
+			h = SeisMain.SeisReadHeaders(in,group=group,key=key,itrace=itrace_in,ntrace=ntrace)
+			offset = SeisMain.ExtractHeader(h,"h")
+			dt = h[1].d1
+
+			parameters = Dict(:offset=>offset,:tnmo=>tnmo,:vnmo=>vnmo,:max_stretch=>max_stretch,:dt=>dt)
+			#SeisProcessFile(in,out,[SeisNMO],[parameters];group=group,key=key,itrace=itrace_in,ntrace=ntrace)
+			d1,h1,e1 = SeisMain.SeisRead(in,group=group,key=key,itrace=itrace_in,ntrace=ntrace)
+
+			d2 = SeisNMO(d1;parameters...)
+			d1 = copy(d2)
+
+			SeisMain.SeisWrite(out,d1,h1,e1,itrace=itrace_in)
+			itrace_in += ntrace
+		end
+	end
 end

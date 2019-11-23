@@ -38,6 +38,7 @@ function SeisLinearEvents(; ot=0.0, dt=0.004, nt=500, ox1=0.0, dx1=10.0,
                           p1=[0.0001,-0.0003],p2=[0.,0.],p3=[0.,0],p4=[0.,0.],
                           amp=[1.0,-1.0], f0=20.0)
 
+
     w = Ricker(dt=dt,f0=f0);
     nf = nextpow(2,nt);
     nw = length(w);
@@ -53,6 +54,7 @@ function SeisLinearEvents(; ot=0.0, dt=0.004, nt=500, ox1=0.0, dx1=10.0,
     D = zeros(Complex{Float64}, nf, nx1, nx2, nx3, nx4);
     nfh = round(Int, floor(nf/2)) + 1;
     wrs = collect(0:1:nfh-1)*2*pi/(nf*dt);     # Frequency in rad/sec
+
     for ie = 1:n_events
      for ix4 = 1:nx4
       for ix3 = 1:nx3
@@ -60,7 +62,7 @@ function SeisLinearEvents(; ot=0.0, dt=0.004, nt=500, ox1=0.0, dx1=10.0,
         for ix1 = 1:nx1
           for iw = 2:nfh-1
               phase = wrs[iw]*(tau[ie] + p1[ie]*x1[ix1] + p2[ie]*x2[ix2]
-                               + p3[ie]*x3[ix3] + p4[ie]*x3[ix4] - t_delay)
+                               + p3[ie]*x3[ix3] + p4[ie]*x4[ix4] - t_delay)
               D[iw:iw, ix1,ix2,ix3,ix4] .+= W[iw]*amp[ie]*exp(-im*phase)
               D[nf-iw+2,ix1,ix2,ix3,ix4] = conj(D[iw,ix1,ix2,ix3,ix4])
           end

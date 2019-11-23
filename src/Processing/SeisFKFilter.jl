@@ -28,18 +28,29 @@ function SeisFKFilter(d;dt=0.004,dx=10,va=-2000,vb=-3000,vc=3000,vd=2000)
 #Fan function needs to be clearly explain and output
 
     nt = size(d,1)
+    nf = iseven(nt) ? nt : nt + 1
+    df = 1/nf/dt
+    nw = round(Int,nf/2) + 1
+
+
+    
+
     nx = size(d,2)
+    nk = iseven(nx) ? nx : nx + 1
+    dk = 1/nk/dx
+    nw =round(Int,floor(nf/2)) + 1
+
     pa = 1. /va
     pb = 1. /vb
     pc = 1. /vc
     pd = 1. /vd
     m = fft(d,1)
     m = fft(m,2)
-    nf = size(m,1)
-    dw = 1. /nf/dt
-    nw = isodd(nf) ? round(Int,floor(nf/2)) + 1 : round(Int,floor(nf/2))
-    nk = size(m,2)
-    dk = 1. /nk/dx
+
+#scaling factor of DFT
+    m = fft(dp)/sqrt(size(dp,1)*size(dp,2))
+
+
     for iw=1:nw
 	w = dw*(iw-1)
 	for ik=1:nk
