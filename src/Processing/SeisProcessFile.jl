@@ -53,16 +53,16 @@ function SeisProcessFile(in::String,out::String,operators,parameters;group="gath
         end
         while itrace_out < itrace_in+nx && itrace_out <= n_tr
 			d1,h1,e1 = SeisMain.SeisRead(in,group=group,key=key,itrace=itrace_in,ntrace=nx)
-            nt=size(d1,1)
+            		nt=size(d1,1)
 			num_traces_in = size(reshape(d1,nt,:),2)
-            println("nx = ",nx)
+            #println("nx = ",nx)
 			for j = 1 : length(operators)
 				op = operators[j]
 				d2 = op(d1;parameters[j]...)
 				d1 = copy(d2)
 			end
 			num_traces_out = size(d1,2)
-            println("itrace_in= ",itrace_in," itrace_out = ",itrace_out," nx = ",nx," itrace+nx= ",itrace+nx)
+            #println("itrace_in= ",itrace_in," itrace_out = ",itrace_out," nx = ",nx," itrace+nx= ",itrace+nx)
 			SeisMain.SeisWrite(out,d1,h1,e1,itrace=itrace_out)
 			itrace_in += num_traces_in
 			itrace_out += num_traces_out
@@ -72,7 +72,7 @@ function SeisProcessFile(in::String,out::String,operators,parameters;group="gath
 
 end
 
-
+ 
 
 function SeisProcessFile(in::Array{String,1},out::Array{String,1},operators,parameters;group="gather",key=["imx","imy"],itrace=1,ntrace=10000)
 	for j = 1 : length(in)
@@ -135,14 +135,14 @@ function SeisProcessFile(in1::String,in2::String,out::String,operators,parameter
 		while itrace_out < itrace+nx && itrace_out <= n_tr
 			d1 = SeisMain.SeisRead(in1,group=group,key=key,itrace=itrace_in,ntrace=ntrace)
 			d2 = SeisMain.SeisRead(in2,group=group,key=key,itrace=itrace_in,ntrace=ntrace)
-            nt = size(d1,1)
+            		nt = size(d1,1)
 			num_traces_in = size(reshape(d1,nt,:),2)
 			for ifunc = 1 : length(operators)
 				func = operators[ifunc]
 				d3 = func(d1,d2,param)
 				d1 = copy(d3)
 			end
-            nt_out = size(d1,1)
+            		nt_out = size(d1,1)
 			num_traces_out = size(reshape(d1,nt_out,:),2)
 			SeisMain.SeisWrite(out,d1,h1,itrace=itrace_out)
 			itrace_in += num_traces_in

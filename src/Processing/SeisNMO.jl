@@ -65,9 +65,12 @@ julia> SeisMute(filein,fileout, param,group="some")
 """
 function SeisNMO(in::String,out::String,parameters;group="gather",key=["imx","imy"],itrace=1,ntrace=10000)
 
+	dt = get(parameters,:dt,0.001)
+	offset = get(parameters,:offset,1000)
 	tnmo = get(parameters,:tnmo,[0.])
 	vnmo = get(parameters,:vnmo,[1500.])
 	max_stretch = get(parameters,:max_stretch,1000)
+	
 
 	if (group=="all")
 		headers = SeisMain.SeisReadHeaders(in);

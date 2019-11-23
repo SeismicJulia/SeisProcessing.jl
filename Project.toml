@@ -11,3 +11,12 @@ LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Requires = "ae029012-a4dd-5104-9daa-d747884805df"
 SeisMain = "5696fd22-15e8-11e9-1986-f9ab08703604"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[compat]
+julia = "1"
+DSP = "~0.6"
+FFTW = "1"
+Interpolations = "~0.12.5"
+Requires = "0.5.2"
+SeisMain ="0.1.0"
+

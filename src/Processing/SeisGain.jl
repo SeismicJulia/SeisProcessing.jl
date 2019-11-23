@@ -24,7 +24,8 @@ julia> d = SeisHypEvents();
        SeisPlotTX([d dout]);
 ```
 
-Credits: Juan I. Sabbione, Aaron Staton, Mauricio D. Sacchi, 2016
+Credits:  Aaron Staton
+Updates: Juan I. Sabbione, Mauricio D. Sacchi, Fernanda Carozzi
 
 """
 function SeisGain(d::Array{Td,2}; dt::Real=0.004, kind::AbstractString="time",
@@ -122,9 +123,9 @@ function SeisGain(in::String,out::String,parameters;group="gather",key=["imx","i
 	normal = get(parameters,:normal,0)
 	dt = get(parameters,:dt,0.004)
 
-    ext = SeisMain.ReadTextHeader(in);
-    d1 = ext.d1
-    parameters = Dict(:dt=>dt,:kind=>kind,:coef=>coef,:normal=>normal)
+	ext = SeisMain.ReadTextHeader(in);
+    	d1 = ext.d1
+    	parameters = Dict(:dt=>dt,:kind=>kind,:coef=>coef,:normal=>normal)
 
 
 	SeisProcessFile(in,out,[SeisGain],[parameters];group=group,key=key,itrace=itrace,ntrace=ntrace)

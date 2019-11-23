@@ -5,6 +5,9 @@
 *.seis~
 *.txt~
 *.yml~
+*.md~
+*~
+*ipynb_checkpoints
 
 # Text files #
 ###################
