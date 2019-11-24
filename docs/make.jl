@@ -4,7 +4,6 @@ using SeisProcessing
 
 makedocs(
     sitename = "SeisProcessing.jl",
-    format = Documenter.HTML(),
     modules = [SeisProcessing],
     format = Documenter.HTML(prettyurls = get(ENV, "CI", nothing)== "true"),
     pages = [
