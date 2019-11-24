@@ -187,9 +187,7 @@ version = "0.1.0"
 
 [[SeisMain]]
 deps = ["Distributed", "Documenter", "DocumenterTools", "Printf", "Statistics", "Test"]
-git-tree-sha1 = "a8e80fa47680ab2a901669e15e60bebdd9475d63"
-repo-rev = "master"
-repo-url = "https://github.com/SeismicJulia/SeisMain.jl.git"
+git-tree-sha1 = "bc97a26be3900057530d6b1e86b70855d499ef3f"
 uuid = "5696fd22-15e8-11e9-1986-f9ab08703604"
 version = "0.1.0"
 
