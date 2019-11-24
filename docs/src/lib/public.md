@@ -6,9 +6,10 @@ Documentation for public `SeisProcessin.jl` public interface
 
 ```@docs
 SeisAddNoise
-SeisLinerEvents
+SeisLinearEvents
 SeisParabEvents
 SeisHypEvents
+SeisKolmogoroff
 MeasureSNR
 SeisBandPass
 SeisDecimate
@@ -16,7 +17,6 @@ SeisDelay
 SeisDiff
 SeisEnvelope
 SeisFKFilter
-SeisFXDecon
 SeisGain
 SeisMute
 SeisNMO
@@ -25,5 +25,4 @@ SeisProcessFile
 SeisRadonFreqFor
 SeisRadonFreqInv
 SeisSincInterp1D
-SeisStack
 ``` 
