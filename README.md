@@ -19,12 +19,12 @@ To use this package you must first install the [Julia](http://julialang.org/down
 Then, run the Julia application and add the package
 ```
 julia>using Pkg
-julia>Pkg.add(PackageSpec(url="https://github.com/SeismicJulia/SeisProcessing.jl.git"))
+julia>Pkg.add("SeisProcessing")
 ```
 or
 ```
 julia>]
-pkg> add ""https://github.com/SeismicJulia/SeisProcessing.jl.git"
+pkg> add SeisProcessing
 ```
 
 Finally, in the julia prompt type
