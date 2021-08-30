@@ -21,7 +21,7 @@ stacktraces,
 SeisSincInterp1D,
 SeisBPFilter,
 SeisRadon_fx,
-SeisRadon_fx
+SeisRadon_tx
 include("SeisBandPass.jl")
 include("SeisDecimate.jl")
 include("SeisDelay.jl")
