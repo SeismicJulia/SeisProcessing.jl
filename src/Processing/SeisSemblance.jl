@@ -32,7 +32,7 @@ function SeisSemblance(in,param=Dict())
 			#s = s.*H
 			s1  = sum( (sum(s,dims=2)).^2)
 			s2  = sum( sum(s.^2))
-			S[it,iv] = s1/s2
+			S[it,iv] = s1/(s+0.00001)
 		end
 	end
 	S = S/maximum(S[:])
