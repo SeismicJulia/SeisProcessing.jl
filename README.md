@@ -37,11 +37,11 @@ julia>using SeisProcessing
 * SeisLinearEvents, SeisParabEvents, SeisHypEvents, SeisAddNoise, Berlage, Ormsby, Ricker, Hamming
 
 2. Processing
-* SeisBandPass, SeisDecimate, SeisDelay, SeisDiff, SeisEnvelope, SeisFKFilter, SeisFXDecon, SeisGain, SeisKolmogoroff, SeisMute, SeisNMO, SeisPWD, SeisRadonFreqFor, SeisRadonFreqInv, SeisSemblance, SeisSincInterp1D, SeisSmooth1, SeisSmooth2, SeisSmoothGathers, SeisStack, MeasureSNR, TriangleFilter
+* SeisBandPass, SeisDecimate, SeisDelay, SeisDiff, SeisEnvelope, SeisFKFilter, SeisFXDecon, SeisGain, SeisKolmogoroff, SeisMute, SeisNMO, SeisPWD, SeisRadonFreqFor, SeisRadonFreqInv, SeisSemblance, SeisSincInterp1D, SeisSmooth1, SeisSmooth2, SeisSmoothGathers, SeisStack, MeasureSNR, TriangleFilter, SeisBPFilter,SeisRadon_fx,SeisRadon_tx
 
 
 ## Basic usage
-Please, direct to the folder examples. 
+Please, direct to the folder examples.
 Also, the following code produces the figure below.
 
 ```Julia
