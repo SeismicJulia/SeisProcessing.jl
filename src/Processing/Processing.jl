@@ -18,9 +18,9 @@ SeisSmooth1,
 SeisSmooth2,
 SeisSmoothGathers,
 stacktraces,
-SeisSincInterp1D
-SeisBPFilter
-SeisRadon_fx
+SeisSincInterp1D,
+SeisBPFilter,
+SeisRadon_fx,
 SeisRadon_fx
 include("SeisBandPass.jl")
 include("SeisDecimate.jl")
