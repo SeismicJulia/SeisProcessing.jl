@@ -19,6 +19,9 @@ SeisSmooth2,
 SeisSmoothGathers,
 stacktraces,
 SeisSincInterp1D
+SeisBPFilter
+SeisRadon_fx
+SeisRadon_fx
 include("SeisBandPass.jl")
 include("SeisDecimate.jl")
 include("SeisDelay.jl")
@@ -40,3 +43,6 @@ include("SeisSmooth2.jl")
 include("SeisSmoothGathers.jl")
 include("SeisStack.jl")
 include("SeisSincInterp1D.jl")
+include("SeisBPFilter.jl")
+include("SeisRadon_fx.jl")
+include("SeisRadon_tx.jl")
