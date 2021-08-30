@@ -1,19 +1,3 @@
-"""
-    SeisBPFilter(d,dt,f1,f2,f3,f4)
-BP_FILTER: Apply a band-pass filter to a group of traces. The traces
-           can be given by a matrix or a  cube or a ND volume. Firt dimension is time.
-# Arguments
-- `d`:data (first dimention of volume is time)
-- `dt`:sampling interval in sec
-- `f1-f4`:freq. in Hz
-   ^
-   |     ___________
-   |    /           \   Amplitude spectrum
-   |   /             \
-   |  /               \
-   |------------------------>
-      f1 f2        f3 f4
-"""
 function SeisBPFilter(d,dt,f1,f2,f3,f4)
     Ndims = ndims(d);
     N     = size(d);
