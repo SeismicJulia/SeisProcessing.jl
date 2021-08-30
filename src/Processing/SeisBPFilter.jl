@@ -13,15 +13,7 @@ BP_FILTER: Apply a band-pass filter to a group of traces. The traces
    |  /               \
    |------------------------>
       f1 f2        f3 f4
-Copyright (C) 2008, Signal Analysis and Imaging Group
-For more information: http://seismic-lab.physics.ualberta.ca/
-Author: M.D.Sacchi      
-
-
 """
-
-
-
 function SeisBPFilter(d,dt,f1,f2,f3,f4)
     Ndims = ndims(d);
     N     = size(d);
