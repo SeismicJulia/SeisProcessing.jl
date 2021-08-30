@@ -1,7 +1,7 @@
 name = "SeisProcessing"
 uuid = "3ac90d68-5a11-50c7-932e-af3f40d97fdc"
 authors = ["fercarozzi <carozzi@ualberta.ca>"]
-version = "0.1.0"
+version = "0.1.1"
 
 [deps]
 DSP = "717857b8-e6f2-59f4-9121-6e50c889abd2"
