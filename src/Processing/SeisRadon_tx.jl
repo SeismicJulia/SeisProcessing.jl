@@ -16,10 +16,7 @@ OUT   CMP gather         if itype =  1 (Forward transform)  with Out(nh,nt)
 - `Par.transf `:'parab', 'linear', 'hyperb'
 itype =  1  :  forward
 itype = -1  :  adjoint
-
 """
-
-
 function SeisRadon_tx(In,Par,itype);
     h = Par[1][:h];
     p = Par[2][:p];
