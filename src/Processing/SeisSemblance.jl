@@ -1,4 +1,5 @@
 function SeisSemblance(in,param=Dict())
+# Needs comments and streathing mask 
 
 	dt = get(param,"dt",0.002)
 	dx = get(param,"dx",10)
@@ -24,12 +25,11 @@ function SeisSemblance(in,param=Dict())
 					i1 = convert(Int64,floor(is))
 					i2 = i1 + 1
 					if (i1>=1 && i2<=nt)
-						a = is-i1
-						s[ig+L+1,ix] = (1 .-a)*in[i1,ix] + a*in[i2,ix]   #Grab sample with Linear interpolation
+				        	a = is-i1
+						s[ig+L+1,ix] = (1 .-a)*in[i1,ix] + a*in[i2,ix]  # Grab sample with linear interpolation
 					end
 				end
 			end
-			#s = s.*H
 			s1  = sum( (sum(s,dims=2)).^2)
 			s2  = sum( sum(s.^2))
 			S[it,iv] = s1/(s2+0.00001)

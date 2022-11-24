@@ -47,6 +47,8 @@ function SeisFXDecon(d,param=Dict())
 	end
 	dout = ( ifft(Df,1) .+ ifft(Db,1) )/ 2
 	out = real(dout[1:nt,:])
+        out[:,1:filter_length] = 2*out[:,1:filter_length]
+        out[:,nx-filter_length+1:nx] = 2*out[:,nx-filter_length+1:nx]
 
 	return out
 end
@@ -66,6 +68,7 @@ function fxdecon(d,direction,filter_length,mu)
 	end
 	B = M'*M;
 	beta = B[1,1]*mu/100
+println(beta)
 	ab = (B + beta*Matrix(I,filter_length,filter_length))\M'*y
 	temp = M*ab
 	if (direction=="b")
