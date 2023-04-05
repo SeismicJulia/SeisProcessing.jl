@@ -1,7 +1,6 @@
 module SeisProcessing
     using Interpolations
-    using Requires,
-    FFTW,
+    using FFTW,
     LinearAlgebra,
     DSP
     import SeisMain
