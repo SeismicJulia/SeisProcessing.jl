@@ -25,4 +25,11 @@ SeisProcessFile
 SeisRadonFreqFor
 SeisRadonFreqInv
 SeisSincInterp1D
+SeisRadon_tx
+SeisRadon_fx
+Ormsby
+Berlage
+stacktraces
+Hamming
+Ricker
 ``` 
