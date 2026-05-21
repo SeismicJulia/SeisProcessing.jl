@@ -8,6 +8,8 @@
 *.md~
 *~
 *ipynb_checkpoints
+*Manifest.toml
+docs/Manifest.toml
 
 # Text files #
 ###################
