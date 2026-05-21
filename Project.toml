@@ -13,11 +13,10 @@ LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 SeisMain = "5696fd22-15e8-11e9-1986-f9ab08703604"
 
 [compat]
-DSP = "0.6, 0.7"
-Documenter = "0.27, 1"
-DocumenterTools = "0.1"
+julia = "1"
+DSP = "0.8"
 FFTW = "1"
-Interpolations = "0.14"
+Interpolations = "0.16"
 SeisMain = "0.1"
 julia = "1"
 
